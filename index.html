@@ -1,803 +1,1026 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Livre da Ansiedade — O Guia Definitivo</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Livre da Ansiedade — Oferta Especial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#050508;
+  --dark:#0D0D12;
+  --card:#111118;
+  --red:#FF3B3B;
+  --red2:#CC1C1C;
+  --gold:#FFD700;
+  --gold2:#F59E0B;
+  --white:#F8F8FF;
+  --muted:#6B6B80;
+  --border:rgba(255,255,255,.07);
+  --green:#22C55E;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'Inter',sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
 
-  :root {
-    --navy:    #0A0F1E;
-    --navy2:   #111827;
-    --card:    #141929;
-    --purple:  #6C63FF;
-    --lavender:#A78BFA;
-    --glow:    #8B7CF6;
-    --mint:    #34D399;
-    --white:   #F8F9FF;
-    --muted:   #8892A4;
-    --border:  rgba(108,99,255,.18);
-    --r:       16px;
-  }
+/* ── ANNOUNCEMENT BAR ── */
+.announce{
+  background:var(--red);
+  padding:10px 16px;
+  text-align:center;
+  font-size:.82rem;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  position:relative;
+  overflow:hidden;
+}
+.announce::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
+  animation:shine 2.5s infinite;
+}
+@keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 
-  html { scroll-behavior: smooth; }
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(5,5,8,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:14px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;
+}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.4rem;letter-spacing:.06em;
+  color:var(--white);
+}
+.nav-timer-wrap{
+  display:flex;align-items:center;gap:10px;
+  font-size:.78rem;color:var(--muted);
+}
+.nav-timer{
+  display:flex;gap:6px;
+}
+.timer-block{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:4px 8px;
+  text-align:center;
+  min-width:38px;
+}
+.timer-block .num{
+  display:block;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.1rem;letter-spacing:.04em;
+  color:var(--red);
+  line-height:1;
+}
+.timer-block .lbl{
+  display:block;
+  font-size:.6rem;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.06em;
+  margin-top:1px;
+}
+.nav-cta{
+  background:var(--red);
+  color:#fff;font-weight:700;font-size:.82rem;
+  border:none;border-radius:6px;
+  padding:10px 20px;cursor:pointer;
+  text-decoration:none;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  transition:background .2s,transform .2s;
+  white-space:nowrap;
+}
+.nav-cta:hover{background:var(--red2);transform:scale(1.03)}
 
-  body {
-    background: var(--navy);
-    color: var(--white);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.65;
-    overflow-x: hidden;
-  }
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:80px 20px 60px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-noise{
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  pointer-events:none;opacity:.4;
+}
+.hero-glow{
+  position:absolute;
+  width:700px;height:700px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,59,59,.12) 0%,transparent 70%);
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  animation:pulse-glow 4s ease-in-out infinite;
+}
+@keyframes pulse-glow{
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.8}
+  50%{transform:translate(-50%,-50%) scale(1.15);opacity:1}
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,59,59,.1);
+  border:1px solid rgba(255,59,59,.3);
+  border-radius:4px;
+  padding:7px 16px;
+  font-size:.75rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:28px;
+  position:relative;z-index:1;
+}
+.hero-badge .dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--red);
+  animation:blink 1.2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3rem,9vw,8rem);
+  line-height:.95;
+  letter-spacing:.03em;
+  max-width:900px;
+  margin-bottom:10px;
+  position:relative;z-index:1;
+}
+.hero h1 .red{color:var(--red)}
+.hero h1 .gold{color:var(--gold)}
+.hero-sub{
+  font-size:clamp(1rem,2vw,1.25rem);
+  color:var(--muted);
+  max-width:580px;
+  margin-bottom:36px;
+  font-weight:400;
+  position:relative;z-index:1;
+  line-height:1.65;
+}
+.hero-sub strong{color:var(--white);font-weight:700}
 
-  /* ── CANVAS BACKGROUND ── */
-  #bg-canvas {
-    position: fixed; inset: 0;
-    pointer-events: none; z-index: 0;
-    opacity: .45;
-  }
+/* STOCK BAR */
+.stock-wrap{
+  width:100%;max-width:520px;
+  margin-bottom:36px;
+  position:relative;z-index:1;
+}
+.stock-label{
+  display:flex;justify-content:space-between;
+  font-size:.78rem;font-weight:600;
+  margin-bottom:8px;
+}
+.stock-label .left{color:var(--muted)}
+.stock-label .right{color:var(--red);font-weight:700}
+.stock-bar-bg{
+  width:100%;height:8px;
+  background:rgba(255,255,255,.08);
+  border-radius:4px;overflow:hidden;
+}
+.stock-bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--red2),var(--red));
+  border-radius:4px;
+  width:73%;
+  position:relative;
+  animation:stock-pulse 2s ease-in-out infinite;
+}
+@keyframes stock-pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}
 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 18px 40px;
-    display: flex; align-items: center; justify-content: space-between;
-    background: rgba(10,15,30,.82);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700; font-size: 1.1rem;
-    color: var(--lavender);
-    letter-spacing: .02em;
-  }
-  .nav-cta {
-    background: var(--purple);
-    color: #fff; border: none; border-radius: 50px;
-    padding: 10px 24px; font-size: .85rem;
-    font-weight: 600; cursor: pointer;
-    transition: transform .2s, box-shadow .2s;
-    text-decoration: none;
-  }
-  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,99,255,.45); }
+.btn-hero{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--red);
+  color:#fff;border:none;border-radius:8px;
+  padding:20px 48px;
+  font-size:1.1rem;font-weight:800;
+  cursor:pointer;text-decoration:none;
+  letter-spacing:.04em;text-transform:uppercase;
+  box-shadow:0 0 48px rgba(255,59,59,.4),0 4px 0 var(--red2);
+  transition:transform .15s,box-shadow .15s;
+  position:relative;z-index:1;
+}
+.btn-hero:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 72px rgba(255,59,59,.6),0 6px 0 var(--red2);
+}
+.btn-hero:active{transform:translateY(1px);box-shadow:0 0 32px rgba(255,59,59,.3),0 2px 0 var(--red2)}
+.btn-arrow{transition:transform .2s}
+.btn-hero:hover .btn-arrow{transform:translateX(4px)}
 
-  /* ── SECTIONS ── */
-  section { position: relative; z-index: 1; }
+.hero-guarantee{
+  margin-top:16px;
+  font-size:.78rem;color:var(--muted);
+  display:flex;align-items:center;gap:6px;
+  justify-content:center;
+  position:relative;z-index:1;
+}
+.hero-guarantee strong{color:var(--green)}
 
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center;
-    padding: 120px 24px 80px;
-  }
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(108,99,255,.12);
-    border: 1px solid var(--border);
-    border-radius: 50px;
-    padding: 6px 18px; font-size: .8rem;
-    color: var(--lavender); letter-spacing: .08em;
-    text-transform: uppercase; font-weight: 500;
-    margin-bottom: 32px;
-  }
-  .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); display: block; animation: pulse 2s infinite; }
+/* TRUST STRIP */
+.trust-strip{
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:20px 32px;
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:32px;
+}
+.trust-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:.85rem;color:var(--muted);
+}
+.trust-item .icon{font-size:1.1rem}
+.trust-item strong{color:var(--white)}
 
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.6rem, 6vw, 5.2rem);
-    font-weight: 900; line-height: 1.1;
-    max-width: 820px;
-    margin-bottom: 28px;
-  }
-  .hero h1 em {
-    font-style: italic; color: var(--lavender);
-  }
-  .hero-sub {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    color: var(--muted); max-width: 560px;
-    margin-bottom: 48px; font-weight: 300;
-  }
-  .hero-sub strong { color: var(--white); font-weight: 500; }
+/* ── SECTIONS ── */
+section{position:relative}
+.container{max-width:1060px;margin:0 auto;padding:0 24px}
+.section-pad{padding:90px 0}
 
-  .btn-hero {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: linear-gradient(135deg, var(--purple), #8B5CF6);
-    color: #fff; border: none; border-radius: 50px;
-    padding: 18px 44px; font-size: 1.05rem;
-    font-weight: 600; cursor: pointer;
-    box-shadow: 0 0 48px rgba(108,99,255,.4);
-    transition: transform .25s, box-shadow .25s;
-    text-decoration: none; letter-spacing: .02em;
-  }
-  .btn-hero:hover { transform: translateY(-3px); box-shadow: 0 0 72px rgba(108,99,255,.6); }
-  .btn-hero svg { transition: transform .2s; }
-  .btn-hero:hover svg { transform: translateX(4px); }
+/* SECTION LABEL */
+.slabel{
+  font-size:.7rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--red);margin-bottom:12px;
+}
 
-  .hero-trust {
-    margin-top: 40px;
-    display: flex; align-items: center; gap: 20px;
-    flex-wrap: wrap; justify-content: center;
-    font-size: .82rem; color: var(--muted);
-  }
-  .hero-trust .stars { color: #FBBF24; letter-spacing: 2px; }
-  .hero-trust .sep { width: 1px; height: 20px; background: var(--border); }
+/* ── PROMISE ── */
+.promise{
+  background:var(--dark);
+  padding:90px 0;
+}
+.promise-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;
+}
+@media(max-width:768px){.promise-inner{grid-template-columns:1fr;gap:40px}}
+.promise-text h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.4rem,5vw,4.2rem);
+  line-height:1;letter-spacing:.03em;
+  margin-bottom:16px;
+}
+.promise-text h2 .red{color:var(--red)}
+.promise-text p{color:var(--muted);font-size:1.05rem;margin-bottom:20px;line-height:1.7}
+.promise-text p strong{color:var(--white)}
+.promise-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+.promise-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:.95rem;color:var(--muted);
+}
+.promise-list li .ck{
+  color:var(--green);font-weight:700;font-size:1rem;
+  margin-top:2px;flex-shrink:0;
+}
+.promise-list li strong{color:var(--white)}
 
-  /* ── WAVE DIVIDER ── */
-  .wave-divider { display: block; width: 100%; margin-top: -2px; }
+.promise-numbers{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.pnum-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:28px 20px;
+  text-align:center;
+  transition:border-color .3s;
+}
+.pnum-card:hover{border-color:rgba(255,59,59,.35)}
+.pnum-card .num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:3.2rem;letter-spacing:.04em;
+  line-height:1;
+  color:var(--red);
+  margin-bottom:6px;
+}
+.pnum-card .desc{
+  font-size:.82rem;color:var(--muted);
+  line-height:1.4;
+}
 
-  /* ── PAIN SECTION ── */
-  .pain {
-    background: var(--navy2);
-    padding: 100px 24px;
-  }
-  .container { max-width: 1100px; margin: 0 auto; }
-  .section-label {
-    font-size: .75rem; letter-spacing: .14em;
-    text-transform: uppercase; color: var(--lavender);
-    font-weight: 600; margin-bottom: 16px;
-  }
-  .pain h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 700; line-height: 1.2;
-    max-width: 600px; margin-bottom: 20px;
-  }
-  .pain-lead { color: var(--muted); max-width: 520px; font-size: 1.05rem; margin-bottom: 60px; }
+/* ── PAIN ── */
+.pain{padding:90px 0;background:var(--black)}
+.pain h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.4rem,5vw,4rem);
+  line-height:1;letter-spacing:.03em;margin-bottom:8px;
+}
+.pain-lead{color:var(--muted);font-size:1.05rem;max-width:520px;margin-bottom:48px;line-height:1.7}
+.pain-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:2px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+.pain-card{
+  background:var(--card);
+  padding:28px 24px;
+  transition:background .25s;
+  position:relative;
+}
+.pain-card:hover{background:#16161F}
+.pain-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--red);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s;
+}
+.pain-card:hover::before{transform:scaleX(1)}
+.pain-card .ico{font-size:1.8rem;margin-bottom:12px}
+.pain-card h3{font-size:.97rem;font-weight:700;margin-bottom:6px;color:var(--white)}
+.pain-card p{font-size:.88rem;color:var(--muted);line-height:1.6}
 
-  .pain-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 20px;
-  }
-  .pain-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: 28px;
-    transition: border-color .3s, transform .3s;
-  }
-  .pain-card:hover { border-color: var(--purple); transform: translateY(-4px); }
-  .pain-icon { font-size: 1.8rem; margin-bottom: 14px; }
-  .pain-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
-  .pain-card p { font-size: .9rem; color: var(--muted); line-height: 1.6; }
+/* ── PROOF / TESTIMONIALS ── */
+.proof{background:var(--dark);padding:90px 0}
+.proof h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.4rem,5vw,4rem);
+  letter-spacing:.03em;margin-bottom:6px;
+}
+.proof-sub{color:var(--muted);margin-bottom:48px;font-size:1rem}
+.proof-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:16px;
+}
+.testi{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:28px;
+  display:flex;flex-direction:column;gap:16px;
+  transition:border-color .3s,transform .3s;
+}
+.testi:hover{border-color:rgba(255,59,59,.25);transform:translateY(-4px)}
+.testi-stars{color:var(--gold);letter-spacing:3px;font-size:.95rem}
+.testi-text{
+  font-size:.95rem;color:var(--muted);
+  line-height:1.7;flex:1;
+  font-style:italic;
+}
+.testi-text strong{color:var(--white);font-style:normal}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-av{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--red2),var(--red));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.85rem;flex-shrink:0;
+}
+.testi-name{font-weight:700;font-size:.88rem}
+.testi-role{font-size:.75rem;color:var(--muted);margin-top:1px}
+/* featured testi */
+.testi.featured{
+  border-color:rgba(255,215,0,.25);
+  background:linear-gradient(135deg,#16130A,var(--card));
+}
+.testi.featured .testi-stars{color:var(--gold)}
 
-  /* ── EBOOK PREVIEW ── */
-  .ebook-section {
-    padding: 110px 24px;
-    background: var(--navy);
-  }
-  .ebook-inner {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 80px; align-items: center;
-  }
-  @media(max-width:768px){ .ebook-inner { grid-template-columns: 1fr; gap: 48px; } }
+/* ── WHAT YOU GET ── */
+.get{padding:90px 0;background:var(--black)}
+.get-inner{
+  display:grid;grid-template-columns:1fr 1.1fr;
+  gap:64px;align-items:start;
+}
+@media(max-width:768px){.get-inner{grid-template-columns:1fr;gap:40px}}
+.get-book{
+  position:sticky;top:100px;
+  display:flex;flex-direction:column;align-items:center;gap:20px;
+}
+.book-3d{
+  width:240px;height:320px;
+  border-radius:4px 14px 14px 4px;
+  background:linear-gradient(140deg,#1A0A30,#3B1F6A,#6C3FC9);
+  box-shadow:
+    -10px 0 0 rgba(0,0,0,.5),
+    0 24px 80px rgba(108,63,201,.5),
+    0 0 120px rgba(108,63,201,.2);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:28px 20px;text-align:center;
+  animation:float 6s ease-in-out infinite;
+  position:relative;
+}
+.book-3d::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;width:14px;
+  background:rgba(0,0,0,.4);
+  border-radius:4px 0 0 4px;
+}
+.book-3d .bico{font-size:2.6rem;margin-bottom:12px}
+.book-3d .btitle{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.3rem;letter-spacing:.08em;
+  color:#fff;margin-bottom:4px;
+}
+.book-3d .bsub{font-size:.68rem;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase}
+.book-badge-new{
+  position:absolute;top:-12px;right:-12px;
+  background:var(--gold);color:#000;
+  font-size:.65rem;font-weight:800;
+  padding:5px 12px;border-radius:4px;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0) rotateY(-6deg)}
+  50%{transform:translateY(-14px) rotateY(-6deg)}
+}
 
-  .ebook-visual {
-    perspective: 1000px;
-    display: flex; justify-content: center;
-  }
-  .ebook-book {
-    width: 260px; height: 340px;
-    border-radius: 6px 18px 18px 6px;
-    background: linear-gradient(140deg, #1E1B4B 0%, #312E81 50%, #4C1D95 100%);
-    box-shadow:
-      -8px 0 0 rgba(0,0,0,.4),
-      0 32px 80px rgba(108,99,255,.35),
-      0 0 100px rgba(108,99,255,.15);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 32px 24px; text-align: center;
-    animation: float 6s ease-in-out infinite;
-    position: relative;
-    cursor: default;
-  }
-  .ebook-book::before {
-    content: '';
-    position: absolute; left: 0; top: 0; bottom: 0; width: 12px;
-    background: rgba(0,0,0,.35);
-    border-radius: 6px 0 0 6px;
-  }
-  .ebook-book-emoji { font-size: 2.8rem; margin-bottom: 16px; }
-  .ebook-book-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem; font-weight: 700;
-    line-height: 1.3; color: #fff;
-    margin-bottom: 8px;
-  }
-  .ebook-book-sub { font-size: .72rem; color: rgba(255,255,255,.55); letter-spacing: .08em; text-transform: uppercase; }
-  .ebook-badge {
-    position: absolute; top: -14px; right: -14px;
-    background: var(--mint);
-    color: #064E3B; font-size: .68rem; font-weight: 700;
-    padding: 6px 12px; border-radius: 50px;
-    letter-spacing: .06em; text-transform: uppercase;
-  }
+.book-includes{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px;
+  width:100%;
+}
+.book-includes h4{font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.inc-item{
+  display:flex;align-items:center;gap:10px;
+  font-size:.88rem;padding:8px 0;
+  border-bottom:1px solid var(--border);
+}
+.inc-item:last-child{border:none}
+.inc-item .ck{color:var(--green);font-weight:700}
 
-  .ebook-info .section-label { margin-bottom: 10px; }
-  .ebook-info h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.9rem, 3.5vw, 2.8rem);
-    font-weight: 800; line-height: 1.15;
-    margin-bottom: 20px;
-  }
-  .ebook-info p { color: var(--muted); font-size: 1rem; margin-bottom: 32px; }
+.get-list h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.2rem,4vw,3.4rem);
+  letter-spacing:.03em;margin-bottom:8px;
+  line-height:1;
+}
+.get-list p{color:var(--muted);margin-bottom:28px;font-size:1rem;line-height:1.7}
+.chapter-list{display:flex;flex-direction:column;gap:10px}
+.ch-item{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:16px 18px;
+  display:flex;align-items:center;gap:14px;
+  transition:border-color .25s,transform .25s;
+  cursor:default;
+}
+.ch-item:hover{border-color:rgba(255,59,59,.3);transform:translateX(4px)}
+.ch-num{
+  min-width:34px;height:34px;border-radius:6px;
+  background:rgba(255,59,59,.1);
+  border:1px solid rgba(255,59,59,.25);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:.95rem;
+  color:var(--red);flex-shrink:0;
+}
+.ch-name{font-size:.92rem;font-weight:500;flex:1}
+.ch-pages{font-size:.75rem;color:var(--muted)}
 
-  .chapters { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .chapter-item {
-    display: flex; align-items: center; gap: 14px;
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 10px; padding: 14px 18px;
-    font-size: .92rem;
-    transition: border-color .2s;
-  }
-  .chapter-item:hover { border-color: var(--lavender); }
-  .chapter-num {
-    min-width: 32px; height: 32px; border-radius: 50%;
-    background: rgba(108,99,255,.2);
-    color: var(--lavender); font-size: .75rem;
-    font-weight: 700; display: flex; align-items: center; justify-content: center;
-  }
-  .chapter-name { font-weight: 500; }
-  .chapter-pages { margin-left: auto; color: var(--muted); font-size: .78rem; }
+/* ── URGENCY SECTION ── */
+.urgency{
+  background:var(--red);
+  padding:64px 24px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.urgency::before{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    -45deg,
+    transparent,transparent 20px,
+    rgba(0,0,0,.04) 20px,rgba(0,0,0,.04) 40px
+  );
+}
+.urgency h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2rem,5vw,4rem);
+  letter-spacing:.04em;
+  color:#fff;margin-bottom:8px;
+  position:relative;
+}
+.urgency p{
+  color:rgba(255,255,255,.8);
+  font-size:1.05rem;margin-bottom:32px;
+  max-width:560px;margin-left:auto;margin-right:auto;
+  position:relative;
+}
+.urgency-timer{
+  display:inline-flex;gap:10px;
+  margin-bottom:36px;position:relative;
+}
+.utb{
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:8px;
+  padding:12px 16px;
+  min-width:70px;text-align:center;
+}
+.utb .unum{
+  display:block;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2.6rem;letter-spacing:.04em;
+  color:#fff;line-height:1;
+}
+.utb .ulbl{
+  display:block;font-size:.65rem;
+  color:rgba(255,255,255,.6);
+  text-transform:uppercase;letter-spacing:.1em;
+  margin-top:2px;
+}
+.utb-sep{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2.6rem;color:rgba(255,255,255,.5);
+  align-self:center;margin-top:-8px;
+}
+.btn-urgency{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#fff;
+  color:var(--red);border:none;border-radius:8px;
+  padding:20px 48px;
+  font-size:1.05rem;font-weight:800;
+  cursor:pointer;text-decoration:none;
+  letter-spacing:.04em;text-transform:uppercase;
+  box-shadow:0 8px 32px rgba(0,0,0,.25);
+  transition:transform .15s,box-shadow .15s;
+  position:relative;
+}
+.btn-urgency:hover{transform:scale(1.04);box-shadow:0 12px 40px rgba(0,0,0,.35)}
 
-  /* ── WHAT YOU LEARN ── */
-  .learn-section {
-    background: var(--navy2);
-    padding: 110px 24px;
-  }
-  .learn-header { text-align: center; margin-bottom: 70px; }
-  .learn-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800; margin-top: 12px;
-  }
-  .learn-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-  }
-  .learn-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--r); padding: 32px;
-    position: relative; overflow: hidden;
-    transition: transform .3s, border-color .3s;
-  }
-  .learn-card:hover { transform: translateY(-6px); border-color: var(--purple); }
-  .learn-card::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(108,99,255,.04), transparent);
-    pointer-events: none;
-  }
-  .learn-check {
-    width: 40px; height: 40px; border-radius: 10px;
-    background: rgba(52,211,153,.12);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem; margin-bottom: 18px;
-  }
-  .learn-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; }
-  .learn-card p { font-size: .88rem; color: var(--muted); line-height: 1.65; }
+/* ── PRICING ── */
+.pricing{padding:90px 0;background:var(--dark)}
+.pricing-head{text-align:center;margin-bottom:48px}
+.pricing-head h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.4rem,5vw,4.2rem);
+  letter-spacing:.03em;margin-bottom:8px;
+}
+.pricing-head p{color:var(--muted);font-size:1rem;max-width:480px;margin:0 auto}
 
-  /* ── TESTIMONIALS ── */
-  .testimonials {
-    padding: 110px 24px;
-    background: var(--navy);
-  }
-  .testimonials-header { text-align: center; margin-bottom: 60px; }
-  .testimonials-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 2.8rem);
-    font-weight: 800; margin-top: 12px;
-  }
-  .testi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-  }
-  .testi-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--r); padding: 32px;
-    display: flex; flex-direction: column; gap: 20px;
-    transition: transform .3s;
-  }
-  .testi-card:hover { transform: translateY(-4px); }
-  .testi-stars { color: #FBBF24; font-size: 1rem; letter-spacing: 3px; }
-  .testi-text { font-size: .95rem; color: var(--muted); line-height: 1.7; flex: 1; font-style: italic; }
-  .testi-author { display: flex; align-items: center; gap: 14px; }
-  .testi-avatar {
-    width: 46px; height: 46px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--purple), var(--lavender));
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: .9rem;
-  }
-  .testi-name { font-weight: 600; font-size: .9rem; }
-  .testi-role { font-size: .78rem; color: var(--muted); }
+.price-box{
+  max-width:560px;margin:0 auto;
+  background:var(--card);
+  border:2px solid var(--red);
+  border-radius:16px;
+  padding:48px 40px;
+  position:relative;
+  box-shadow:0 0 80px rgba(255,59,59,.2);
+}
+@media(max-width:560px){.price-box{padding:36px 20px}}
+.price-popular{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:var(--red);
+  color:#fff;font-size:.7rem;font-weight:800;
+  padding:5px 18px;border-radius:4px;
+  letter-spacing:.1em;text-transform:uppercase;
+  white-space:nowrap;
+}
+.price-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.6rem;letter-spacing:.06em;
+  margin-bottom:6px;text-align:center;
+}
+.price-desc{color:var(--muted);font-size:.88rem;text-align:center;margin-bottom:24px}
+.price-old{
+  text-align:center;font-size:.88rem;color:var(--muted);
+  text-decoration:line-through;margin-bottom:4px;
+}
+.price-old strong{color:var(--red);font-style:normal;text-decoration:none}
+.price-amount{
+  display:flex;align-items:baseline;justify-content:center;gap:3px;
+  margin-bottom:4px;
+}
+.price-curr{font-size:1.3rem;font-weight:700;color:var(--muted);align-self:flex-start;margin-top:12px}
+.price-val{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:5.5rem;letter-spacing:.02em;line-height:1;
+  color:var(--white);
+}
+.price-cts{font-size:1.3rem;font-weight:700;color:var(--muted);align-self:flex-start;margin-top:12px}
+.price-period{text-align:center;font-size:.82rem;color:var(--muted);margin-bottom:28px}
+.price-period strong{color:var(--green)}
 
-  /* ── AUTHOR ── */
-  .author {
-    background: var(--navy2);
-    padding: 110px 24px;
-  }
-  .author-inner {
-    display: grid; grid-template-columns: auto 1fr;
-    gap: 64px; align-items: center; max-width: 900px; margin: 0 auto;
-  }
-  @media(max-width:700px){ .author-inner { grid-template-columns: 1fr; text-align: center; } }
-  .author-photo {
-    width: 200px; height: 200px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--purple) 0%, #4C1D95 100%);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 5rem; flex-shrink: 0;
-    box-shadow: 0 0 60px rgba(108,99,255,.3);
-  }
-  .author-info .section-label { margin-bottom: 8px; }
-  .author-info h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
-    font-weight: 800; margin-bottom: 16px;
-  }
-  .author-info p { color: var(--muted); margin-bottom: 12px; font-size: .97rem; }
-  .author-creds {
-    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px;
-  }
-  .cred-badge {
-    background: rgba(108,99,255,.12);
-    border: 1px solid var(--border);
-    border-radius: 50px; padding: 6px 16px;
-    font-size: .78rem; color: var(--lavender); font-weight: 500;
-  }
+.price-includes{
+  list-style:none;display:flex;flex-direction:column;gap:12px;
+  margin-bottom:36px;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:24px 0;
+}
+.price-includes li{
+  display:flex;align-items:flex-start;gap:10px;font-size:.92rem;
+}
+.price-includes li .ck{color:var(--green);font-weight:700;flex-shrink:0;font-size:1rem}
 
-  /* ── PRICING ── */
-  .pricing {
-    padding: 110px 24px;
-    background: var(--navy);
-    text-align: center;
-  }
-  .pricing h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800; margin-top: 12px; margin-bottom: 12px;
-  }
-  .pricing-sub { color: var(--muted); font-size: 1.05rem; margin-bottom: 60px; max-width: 480px; margin-left: auto; margin-right: auto; }
+.btn-buy{
+  display:block;width:100%;
+  background:var(--red);
+  color:#fff;border:none;border-radius:8px;
+  padding:20px;font-size:1.05rem;font-weight:800;
+  cursor:pointer;text-decoration:none;text-align:center;
+  letter-spacing:.04em;text-transform:uppercase;
+  box-shadow:0 0 40px rgba(255,59,59,.35),0 4px 0 var(--red2);
+  transition:transform .15s,box-shadow .15s;
+}
+.btn-buy:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(255,59,59,.5),0 6px 0 var(--red2)}
+.btn-buy:active{transform:translateY(1px);box-shadow:0 0 20px rgba(255,59,59,.25),0 2px 0 var(--red2)}
 
-  .price-box {
-    max-width: 520px; margin: 0 auto;
-    background: var(--card);
-    border: 2px solid var(--purple);
-    border-radius: 24px; padding: 56px 48px;
-    position: relative;
-    box-shadow: 0 0 80px rgba(108,99,255,.2);
-  }
-  @media(max-width:560px){ .price-box { padding: 40px 24px; } }
-  .popular-badge {
-    position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
-    background: var(--purple);
-    color: #fff; font-size: .78rem; font-weight: 700;
-    padding: 6px 20px; border-radius: 50px;
-    letter-spacing: .08em; text-transform: uppercase;
-  }
-  .price-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem; font-weight: 700; margin-bottom: 8px;
-  }
-  .price-desc { color: var(--muted); font-size: .9rem; margin-bottom: 36px; }
-  .price-amount {
-    display: flex; align-items: baseline; justify-content: center; gap: 4px;
-    margin-bottom: 8px;
-  }
-  .price-de {
-    font-size: .9rem; color: var(--muted); text-decoration: line-through; margin-bottom: 4px;
-  }
-  .price-currency { font-size: 1.4rem; font-weight: 600; color: var(--lavender); }
-  .price-value {
-    font-family: 'Playfair Display', serif;
-    font-size: 4rem; font-weight: 900; line-height: 1;
-  }
-  .price-cents { font-size: 1.4rem; font-weight: 600; align-self: flex-start; margin-top: 10px; }
-  .price-period { font-size: .85rem; color: var(--muted); margin-bottom: 40px; }
+.price-lock{
+  margin-top:16px;text-align:center;
+  font-size:.78rem;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.price-lock strong{color:var(--white)}
 
-  .price-list { list-style: none; text-align: left; margin-bottom: 44px; display: flex; flex-direction: column; gap: 14px; }
-  .price-list li { display: flex; align-items: center; gap: 12px; font-size: .95rem; }
-  .price-list li::before { content: '✓'; color: var(--mint); font-weight: 700; font-size: 1rem; flex-shrink: 0; }
+.price-urgency-bar{
+  background:rgba(255,59,59,.08);
+  border:1px solid rgba(255,59,59,.2);
+  border-radius:8px;
+  padding:14px 18px;
+  margin-top:16px;
+  display:flex;align-items:center;gap:10px;
+  font-size:.82rem;
+}
+.pul-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--red);flex-shrink:0;
+  animation:blink 1.2s infinite;
+}
+.pul-text{color:var(--muted)}
+.pul-text strong{color:var(--red)}
 
-  .btn-buy {
-    display: block; width: 100%;
-    background: linear-gradient(135deg, var(--purple), #8B5CF6);
-    color: #fff; border: none; border-radius: 50px;
-    padding: 20px; font-size: 1.1rem;
-    font-weight: 700; cursor: pointer;
-    box-shadow: 0 8px 40px rgba(108,99,255,.45);
-    transition: transform .25s, box-shadow .25s;
-    text-decoration: none; text-align: center;
-    letter-spacing: .02em;
-  }
-  .btn-buy:hover { transform: translateY(-3px); box-shadow: 0 16px 60px rgba(108,99,255,.6); }
 
-  .price-guarantee {
-    margin-top: 24px; font-size: .82rem; color: var(--muted);
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-  }
+/* ── BUYERS COUNTER ── */
+let buyersBase = 1247;
+const onlineBase = 38;
+const lastBuyMins = [2,3,4,5,7,2,3,1,4,6];
+let lbIdx = 0;
 
-  /* ── FAQ ── */
-  .faq {
-    background: var(--navy2);
-    padding: 110px 24px;
+function updateBuyers() {
+  if (Math.random() < 0.4) { buyersBase++; }
+  const online = onlineBase + Math.floor(Math.random() * 14) - 7;
+  const bc = document.getElementById('buyers-count');
+  const oc = document.getElementById('online-count');
+  const lb = document.getElementById('last-buy');
+  if (bc) bc.textContent = buyersBase.toLocaleString('pt-BR');
+  if (oc) oc.textContent = Math.max(18, online);
+  if (lb) {
+    lbIdx = (lbIdx + 1) % lastBuyMins.length;
+    lb.textContent = 'há ' + lastBuyMins[lbIdx] + ' min';
   }
-  .faq-header { text-align: center; margin-bottom: 60px; }
-  .faq-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 2.8rem);
-    font-weight: 800; margin-top: 12px;
-  }
-  .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-  .faq-item {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--r); overflow: hidden;
-    transition: border-color .2s;
-  }
-  .faq-item.open { border-color: var(--purple); }
-  .faq-q {
-    width: 100%; background: none; border: none;
-    color: var(--white); font-family: 'Inter', sans-serif;
-    font-size: .97rem; font-weight: 500;
-    padding: 22px 24px; text-align: left;
-    display: flex; justify-content: space-between; align-items: center;
-    cursor: pointer; gap: 12px;
-  }
-  .faq-chevron { color: var(--lavender); font-size: 1.2rem; transition: transform .3s; flex-shrink: 0; }
-  .faq-item.open .faq-chevron { transform: rotate(180deg); }
-  .faq-a {
-    max-height: 0; overflow: hidden;
-    transition: max-height .35s ease, padding .3s;
-    padding: 0 24px;
-    color: var(--muted); font-size: .92rem; line-height: 1.7;
-  }
-  .faq-item.open .faq-a { max-height: 300px; padding: 0 24px 22px; }
+}
+setInterval(updateBuyers, 22000);
 
-  /* ── FINAL CTA ── */
-  .final-cta {
-    padding: 120px 24px;
-    background: var(--navy);
-    text-align: center;
-    position: relative; overflow: hidden;
-  }
-  .final-cta::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(108,99,255,.14) 0%, transparent 70%);
-  }
-  .final-cta h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.2rem, 5vw, 3.8rem);
-    font-weight: 900; line-height: 1.15;
-    max-width: 700px; margin: 0 auto 24px;
-    position: relative;
-  }
-  .final-cta h2 em { font-style: italic; color: var(--lavender); }
-  .final-cta p { color: var(--muted); font-size: 1.1rem; margin-bottom: 48px; position: relative; }
-  .final-cta .btn-hero { position: relative; font-size: 1.1rem; padding: 20px 52px; }
+/* ── FAQ ── */
+.faq{padding:90px 0;background:var(--black)}
+.faq-head{text-align:center;margin-bottom:48px}
+.faq-head h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.2rem,4vw,3.6rem);
+  letter-spacing:.03em;margin-bottom:6px;
+}
+.faq-list{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.faq-item{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:8px;overflow:hidden;
+  transition:border-color .2s;
+}
+.faq-item.open{border-color:rgba(255,59,59,.3)}
+.faq-q{
+  width:100%;background:none;border:none;
+  color:var(--white);font-family:'Inter',sans-serif;
+  font-size:.95rem;font-weight:600;
+  padding:20px 22px;text-align:left;
+  display:flex;justify-content:space-between;align-items:center;
+  cursor:pointer;gap:12px;
+}
+.faq-icon{color:var(--red);font-size:1.3rem;transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease,padding .3s;
+  padding:0 22px;color:var(--muted);
+  font-size:.9rem;line-height:1.7;
+}
+.faq-item.open .faq-a{max-height:200px;padding:0 22px 20px}
 
-  /* ── FOOTER ── */
-  footer {
-    background: var(--navy2);
-    padding: 40px 24px;
-    text-align: center;
-    font-size: .82rem; color: var(--muted);
-    border-top: 1px solid var(--border);
-  }
-  footer a { color: var(--muted); text-decoration: none; }
-  footer a:hover { color: var(--lavender); }
+/* ── FINAL CTA ── */
+.final{
+  padding:100px 24px;
+  background:var(--dark);
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.final::before{
+  content:'';position:absolute;
+  width:800px;height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,59,59,.1) 0%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;
+}
+.final h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.4rem,6vw,5.5rem);
+  letter-spacing:.04em;line-height:.95;
+  max-width:800px;margin:0 auto 20px;
+  position:relative;
+}
+.final h2 .red{color:var(--red)}
+.final p{color:var(--muted);font-size:1.1rem;margin-bottom:40px;position:relative}
+.final .btn-hero{position:relative;font-size:1.1rem;padding:22px 56px}
 
-  /* ── ANIMATIONS ── */
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: .5; transform: scale(1.5); }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotateY(-8deg); }
-    50%       { transform: translateY(-16px) rotateY(-8deg); }
-  }
+/* ── FOOTER ── */
+footer{
+  background:var(--black);
+  border-top:1px solid var(--border);
+  padding:36px 24px;
+  text-align:center;
+  font-size:.78rem;color:var(--muted);
+}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--white)}
 
-  .reveal {
-    opacity: 0; transform: translateY(28px);
-    transition: opacity .65s ease, transform .65s ease;
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
 
-  @media(prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation: none !important; transition: none !important; }
-    .reveal { opacity: 1; transform: none; }
-  }
-
-  /* scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--navy); }
-  ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 3px; }
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
 
-<canvas id="bg-canvas"></canvas>
+<!-- ANNOUNCE BAR -->
+<div class="announce">
+  🔥 oferta relâmpago ativa — desconto de 62% por tempo limitado &nbsp;·&nbsp; não vai durar
+</div>
 
 <!-- NAV -->
 <nav>
   <div class="nav-logo">Livre da Ansiedade</div>
-  <a href="#pricing" class="nav-cta">Quero o E-book →</a>
+  <div class="nav-timer-wrap">
+    <span>Expira em:</span>
+    <div class="nav-timer">
+      <div class="timer-block"><span class="num" id="nh">00</span><span class="lbl">hrs</span></div>
+      <div class="timer-block"><span class="num" id="nm">00</span><span class="lbl">min</span></div>
+      <div class="timer-block"><span class="num" id="ns">00</span><span class="lbl">seg</span></div>
+    </div>
+  </div>
+  <a href="#pricing" class="nav-cta">Garantir Agora →</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-eyebrow">
-    <span></span>
-    Guia Completo · E-book Digital
-  </div>
-  <h1>Chega de deixar a <em>ansiedade</em><br>controlar a sua vida</h1>
+  <div class="hero-noise"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-badge"><span class="dot"></span>Oferta exclusiva · Vagas limitadas</div>
+
+  <h1>
+    CHEGA DE<br>
+    DEIXAR A <span class="red">ANSIEDADE</span><br>
+    <span class="gold">DESTRUIR</span> SUA VIDA
+  </h1>
+
   <p class="hero-sub">
-    Um método baseado em neurociência e psicologia cognitiva para
-    <strong>entender, gerenciar e vencer</strong> a ansiedade de uma vez por todas.
+    O método baseado em neurociência que já ajudou <strong>+1.200 pessoas</strong> a
+    recuperar o controle da mente — em menos de 30 dias.
+    <strong>Sem promessa vazia. Sem enrolação.</strong>
   </p>
+
+  <div class="stock-wrap">
+    <div class="stock-label">
+      <span class="left">Vagas disponíveis nesta faixa de preço</span>
+      <span class="right" id="vagas-num">27 restantes</span>
+    </div>
+    <div class="stock-bar-bg">
+      <div class="stock-bar-fill" id="stock-bar"></div>
+    </div>
+  </div>
+
   <a href="#pricing" class="btn-hero">
-    Quero transformar minha vida
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    Quero sair da ansiedade agora
+    <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
-  <div class="hero-trust">
-    <div>
-      <div class="stars">★★★★★</div>
-      <div style="font-size:.78rem;margin-top:2px;">+1.200 leitores</div>
-    </div>
-    <div class="sep"></div>
-    <div>📱 Acesso imediato</div>
-    <div class="sep"></div>
-    <div>🔒 Compra 100% segura</div>
-    <div class="sep"></div>
-    <div>💳 Parcelamento disponível</div>
-  </div>
+  <p class="hero-guarantee">🔒 Garantia total de <strong>7 dias</strong> — risco zero pra você</p>
 </section>
 
-<!-- PAIN POINTS -->
-<section class="pain">
-  <div class="container">
-    <p class="section-label reveal">Você se identifica?</p>
-    <h2 class="reveal">Isso está <em>te custando</em> mais do que você imagina</h2>
-    <p class="pain-lead reveal">Milhões de pessoas carregam o peso da ansiedade diariamente — e a maioria nem sabe que está sendo sabotada.</p>
-    <div class="pain-grid">
-      <div class="pain-card reveal">
-        <div class="pain-icon">😶‍🌫️</div>
-        <h3>Mente que não para</h3>
-        <p>Pensamentos acelerados, cenários catastróficos, preocupação constante que rouba sua paz e seu sono.</p>
-      </div>
-      <div class="pain-card reveal">
-        <div class="pain-icon">💔</div>
-        <h3>Relacionamentos afetados</h3>
-        <p>A ansiedade cria distância, ciúme, insegurança e conflitos que desgastam quem você ama.</p>
-      </div>
-      <div class="pain-card reveal">
-        <div class="pain-icon">📉</div>
-        <h3>Queda na produtividade</h3>
-        <p>Procrastinação, paralisia por análise, dificuldade de foco e medo de errar que trava seu crescimento.</p>
-      </div>
-      <div class="pain-card reveal">
-        <div class="pain-icon">🤒</div>
-        <h3>Sintomas físicos reais</h3>
-        <p>Coração acelerado, tensão muscular, dores de cabeça, insônia e fadiga crônica sem causa aparente.</p>
-      </div>
-      <div class="pain-card reveal">
-        <div class="pain-icon">🔄</div>
-        <h3>Ciclo vicioso</h3>
-        <p>Você sabe que precisa mudar, mas a própria ansiedade sobre mudar te impede de dar o primeiro passo.</p>
-      </div>
-      <div class="pain-card reveal">
-        <div class="pain-icon">🎭</div>
-        <h3>Máscara social</h3>
-        <p>Aparência de que está tudo bem por fora enquanto por dentro você luta contra um turbilhão silencioso.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-item"><span class="icon">⭐</span><strong>4.9/5</strong><span>+1.200 avaliações</span></div>
+  <div class="trust-item"><span class="icon">📱</span><strong>Acesso imediato</strong><span>após o pagamento</span></div>
+  <div class="trust-item"><span class="icon">🔒</span><strong>Pagamento seguro</strong><span>via Cakto</span></div>
+  <div class="trust-item"><span class="icon">↩️</span><strong>7 dias</strong><span>garantia total</span></div>
+  <div class="trust-item"><span class="icon">🇧🇷</span><strong>PIX, Cartão</strong><span>ou Boleto</span></div>
+</div>
 
-<!-- EBOOK PREVIEW -->
-<section class="ebook-section">
+<!-- PROMISE -->
+<section class="promise">
   <div class="container">
-    <div class="ebook-inner">
-      <div class="ebook-visual reveal">
-        <div class="ebook-book">
-          <div class="ebook-badge">NOVO</div>
-          <div class="ebook-book-emoji">🧠</div>
-          <div class="ebook-book-title">Livre da Ansiedade</div>
-          <div class="ebook-book-sub">O Guia Definitivo</div>
-        </div>
-      </div>
-      <div class="ebook-info reveal">
-        <p class="section-label">O que você vai receber</p>
-        <h2>Um e-book completo, direto e transformador</h2>
-        <p>Mais de 120 páginas com conteúdo baseado em evidências, ferramentas práticas e um roteiro claro para reconquistar o controle da sua mente.</p>
-        <ul class="chapters">
-          <li class="chapter-item">
-            <div class="chapter-num">01</div>
-            <span class="chapter-name">O que é ansiedade e por que seu cérebro faz isso</span>
-            <span class="chapter-pages">18p</span>
-          </li>
-          <li class="chapter-item">
-            <div class="chapter-num">02</div>
-            <span class="chapter-name">Os gatilhos que você (provavelmente) ignora</span>
-            <span class="chapter-pages">22p</span>
-          </li>
-          <li class="chapter-item">
-            <div class="chapter-num">03</div>
-            <span class="chapter-name">Técnicas cognitivas para interromper espirais</span>
-            <span class="chapter-pages">28p</span>
-          </li>
-          <li class="chapter-item">
-            <div class="chapter-num">04</div>
-            <span class="chapter-name">Rotina antiansiedade: hábitos que funcionam</span>
-            <span class="chapter-pages">24p</span>
-          </li>
-          <li class="chapter-item">
-            <div class="chapter-num">05</div>
-            <span class="chapter-name">Quando buscar ajuda e como aproveitar a terapia</span>
-            <span class="chapter-pages">16p</span>
-          </li>
-          <li class="chapter-item">
-            <div class="chapter-num">06</div>
-            <span class="chapter-name">Plano de ação: seus próximos 30 dias</span>
-            <span class="chapter-pages">14p</span>
-          </li>
+    <div class="promise-inner">
+      <div class="promise-text reveal">
+        <p class="slabel">A Promessa</p>
+        <h2>EM 30 DIAS VOCÊ VAI SENTIR A <span class="red">DIFERENÇA</span></h2>
+        <p>Não é marketing. São <strong>técnicas validadas por décadas de pesquisa</strong> em neurociência e psicologia cognitiva — as mesmas usadas por clínicas especializadas em todo o mundo.</p>
+        <ul class="promise-list">
+          <li><span class="ck">✓</span><span>Você vai <strong>entender por que seu cérebro faz isso</strong> — e como parar o ciclo</span></li>
+          <li><span class="ck">✓</span><span>Vai ter <strong>técnicas para usar no momento da crise</strong>, não depois</span></li>
+          <li><span class="ck">✓</span><span>Vai construir <strong>uma rotina que protege sua mente</strong> do acúmulo</span></li>
+          <li><span class="ck">✓</span><span>Vai <strong>dormir melhor</strong>, trabalhar melhor, se relacionar melhor</span></li>
+          <li><span class="ck">✓</span><span>Vai ter um <strong>plano claro de 30 dias</strong> — sem adivinhação</span></li>
         </ul>
       </div>
+      <div class="promise-numbers reveal">
+        <div class="pnum-card"><div class="num">300M+</div><div class="desc">pessoas afetadas por ansiedade no mundo</div></div>
+        <div class="pnum-card"><div class="num">#1</div><div class="desc">Brasil: país mais ansioso do planeta (OMS)</div></div>
+        <div class="pnum-card"><div class="num">91%</div><div class="desc">dos leitores relatam melhora nas primeiras 3 semanas</div></div>
+        <div class="pnum-card"><div class="num">R$37</div><div class="desc">menos do que uma consulta. Acesso vitalício.</div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- WHAT YOU LEARN -->
-<section class="learn-section">
+
+<!-- BUYERS COUNTER -->
+<div style="background:#0D0D12;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:16px 24px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
+  <div style="display:flex;align-items:center;gap:-4px;" id="avatars-wrap">
+    <div style="width:34px;height:34px;border-radius:50%;border:2px solid #0D0D12;background:linear-gradient(135deg,#7C3AED,#A855F7);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;margin-left:-8px;z-index:5">RM</div>
+    <div style="width:34px;height:34px;border-radius:50%;border:2px solid #0D0D12;background:linear-gradient(135deg,#DC2626,#F87171);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;margin-left:-8px;z-index:4">CA</div>
+    <div style="width:34px;height:34px;border-radius:50%;border:2px solid #0D0D12;background:linear-gradient(135deg,#0891B2,#38BDF8);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;margin-left:-8px;z-index:3">JS</div>
+    <div style="width:34px;height:34px;border-radius:50%;border:2px solid #0D0D12;background:linear-gradient(135deg,#059669,#34D399);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;margin-left:-8px;z-index:2">PL</div>
+    <div style="width:34px;height:34px;border-radius:50%;border:2px solid #0D0D12;background:linear-gradient(135deg,#D97706,#FBBF24);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;margin-left:-8px;z-index:1">MF</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center;">
+    <span style="font-size:.88rem;color:rgba(255,255,255,.5)"><strong style="color:#fff" id="buyers-count">1.247</strong> pessoas já compraram</span>
+    <span style="width:1px;height:20px;background:rgba(255,255,255,.08);display:inline-block"></span>
+    <span style="font-size:.88rem;color:rgba(255,255,255,.5)">🟢 <strong style="color:#22C55E" id="online-count">38</strong> online agora</span>
+    <span style="width:1px;height:20px;background:rgba(255,255,255,.08);display:inline-block"></span>
+    <span style="font-size:.88rem;color:rgba(255,255,255,.5)">⏱️ Última compra: <strong style="color:#fff" id="last-buy">há 4 min</strong></span>
+  </div>
+</div>
+
+<!-- PAIN -->
+<section class="pain">
   <div class="container">
-    <div class="learn-header">
-      <p class="section-label reveal">Transformação real</p>
-      <h2 class="reveal">O que muda na sua vida depois da leitura</h2>
-    </div>
-    <div class="learn-grid">
-      <div class="learn-card reveal">
-        <div class="learn-check">🧘</div>
-        <h3>Paz mental duradoura</h3>
-        <p>Você aprenderá a criar um estado interno de calma mesmo em situações de pressão extrema, sem depender de nada externo.</p>
-      </div>
-      <div class="learn-card reveal">
-        <div class="learn-check">🛠️</div>
-        <h3>Ferramentas para uso imediato</h3>
-        <p>Técnicas de respiração, reestruturação cognitiva e mindfulness que você pode usar agora mesmo, sem anos de terapia.</p>
-      </div>
-      <div class="learn-card reveal">
-        <div class="learn-check">🔍</div>
-        <h3>Autoconhecimento profundo</h3>
-        <p>Descubra seus padrões emocionais, identifique o que realmente está te incomodando e pare de reagir no piloto automático.</p>
-      </div>
-      <div class="learn-card reveal">
-        <div class="learn-check">🌙</div>
-        <h3>Sono de qualidade</h3>
-        <p>Protocolos noturnos específicos para desligar a mente acelerada e ter noites de sono reparador com consistência.</p>
-      </div>
-      <div class="learn-card reveal">
-        <div class="learn-check">💼</div>
-        <h3>Performance no trabalho</h3>
-        <p>Transforme a ansiedade de desempenho em combustível. Aprenda a usar o estresse como aliado, não como inimigo.</p>
-      </div>
-      <div class="learn-card reveal">
-        <div class="learn-check">❤️</div>
-        <h3>Relacionamentos mais saudáveis</h3>
-        <p>Comunicação não-violenta, gerenciamento de conflitos e como a sua segurança interna transforma todas as suas relações.</p>
-      </div>
+    <p class="slabel reveal">Reconhece isso?</p>
+    <h2 class="reveal">A ANSIEDADE ESTÁ TE <span style="color:var(--red)">CUSTANDO CARO</span></h2>
+    <p class="pain-lead reveal">Cada dia que passa sem tratar é um dia perdido. Veja o que ela faz com você:</p>
+    <div class="pain-grid reveal">
+      <div class="pain-card"><div class="ico">💭</div><h3>Mente que não para</h3><p>Pensamentos em loop, cenários catastróficos, preocupação que não tem pausa — nem à noite.</p></div>
+      <div class="pain-card"><div class="ico">😴</div><h3>Sono destruído</h3><p>Você vai pra cama exausto mas não consegue dormir. Acorda no meio da madrugada com aquela sensação.</p></div>
+      <div class="pain-card"><div class="ico">📉</div><h3>Produtividade zero</h3><p>Paralisia, procrastinação, medo de errar. Você sabe o que precisa fazer — mas não consegue começar.</p></div>
+      <div class="pain-card"><div class="ico">💔</div><h3>Relacionamentos sofrendo</h3><p>Irritabilidade, distância, ciúme, insegurança. A ansiedade destrói o que você tem de mais valioso.</p></div>
+      <div class="pain-card"><div class="ico">🤒</div><h3>Sintomas físicos reais</h3><p>Coração acelerado, tensão no peito, dores de cabeça, cansaço crônico. Tudo sem causa aparente.</p></div>
+      <div class="pain-card"><div class="ico">🎭</div><h3>A máscara social</h3><p>"Tô bem" — enquanto por dentro você sustenta um turbilhão que ninguém sabe que existe.</p></div>
     </div>
   </div>
 </section>
 
 <!-- TESTIMONIALS -->
-<section class="testimonials">
+<section class="proof">
   <div class="container">
-    <div class="testimonials-header">
-      <p class="section-label reveal">Resultados reais</p>
-      <h2 class="reveal">Quem já leu e transformou sua vida</h2>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card reveal">
+    <p class="slabel reveal">Prova real</p>
+    <h2 class="reveal">QUEM JÁ USOU <span style="color:var(--gold)">NÃO VOLTA</span> PRA ANTES</h2>
+    <p class="proof-sub reveal">Resultados reais de pessoas reais. Sem atores, sem roteiro.</p>
+    <div class="proof-grid">
+      <div class="testi featured reveal">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Passei anos achando que minha ansiedade era 'do meu jeito de ser'. Esse e-book me mostrou que existia uma explicação — e principalmente, uma saída. Em 3 semanas já sentia a diferença."</p>
+        <p class="testi-text">"Passei 4 anos convivendo com ansiedade achando que era normal. Em <strong>3 semanas</strong> usando as técnicas do capítulo 3 eu já sentia diferença. Minha esposa notou antes de mim. <strong>Melhor R$37 que já gastei.</strong>"</p>
         <div class="testi-author">
-          <div class="testi-avatar">CA</div>
-          <div>
-            <div class="testi-name">Carolina A.</div>
-            <div class="testi-role">Gestora de Projetos · São Paulo</div>
-          </div>
+          <div class="testi-av">RM</div>
+          <div><div class="testi-name">Rafael M.</div><div class="testi-role">Analista Financeiro · SP · comprou há 2 meses</div></div>
         </div>
       </div>
-      <div class="testi-card reveal">
+      <div class="testi reveal">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Li em dois dias, não consegui parar. A linguagem é direta, sem enrolação. Já apliquei as técnicas do capítulo 3 no meu dia a dia e minha qualidade de sono melhorou muito."</p>
+        <p class="testi-text">"Tinha muito ceticismo. Li em dois dias. As técnicas de respiração e o grounding <strong>funcionam de verdade</strong> — salvaram minha apresentação mais importante do ano."</p>
         <div class="testi-author">
-          <div class="testi-avatar">RM</div>
-          <div>
-            <div class="testi-name">Rafael M.</div>
-            <div class="testi-role">Analista Financeiro · Rio de Janeiro</div>
-          </div>
+          <div class="testi-av">CA</div>
+          <div><div class="testi-name">Carolina A.</div><div class="testi-role">Gestora de Projetos · RJ · comprou há 6 semanas</div></div>
         </div>
       </div>
-      <div class="testi-card reveal">
+      <div class="testi reveal">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Melhor investimento que fiz em mim mesma. Além do conteúdo incrível, o plano de 30 dias do final fez toda diferença. Me deu estrutura quando eu mais precisava de clareza."</p>
+        <p class="testi-text">"O plano de 30 dias mudou tudo. Pela primeira vez eu tinha <strong>estrutura, não só vontade</strong>. Completei o desafio e hoje minha rotina é completamente diferente."</p>
         <div class="testi-author">
-          <div class="testi-avatar">JS</div>
-          <div>
-            <div class="testi-name">Juliana S.</div>
-            <div class="testi-role">Empreendedora · Curitiba</div>
-          </div>
+          <div class="testi-av">JS</div>
+          <div><div class="testi-name">Juliana S.</div><div class="testi-role">Empreendedora · Curitiba · comprou há 5 semanas</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- AUTHOR -->
-<section class="author">
+<!-- WHAT YOU GET -->
+<section class="get">
   <div class="container">
-    <div class="author-inner">
-      <div class="author-photo reveal">🧑‍💻</div>
-      <div class="author-info reveal">
-        <p class="section-label">Quem escreveu</p>
-        <h2>Conteúdo desenvolvido com base em evidências científicas</h2>
-        <p>Este e-book foi desenvolvido com base nas mais recentes pesquisas em neurociência cognitiva, psicologia comportamental e TCC — Terapia Cognitivo-Comportamental, considerada o padrão ouro no tratamento de transtornos de ansiedade.</p>
-        <p>O material reúne as descobertas de autores como Aaron Beck, Daniel Siegel e Jon Kabat-Zinn, traduzidas em uma linguagem acessível e aplicável ao cotidiano real de quem trabalha, tem família e vive sob pressão constante.</p>
-        <div class="author-creds">
-          <span class="cred-badge">Neurociência Cognitiva</span>
-          <span class="cred-badge">TCC aplicada</span>
-          <span class="cred-badge">Mindfulness</span>
-          <span class="cred-badge">Saúde Mental</span>
+    <div class="get-inner">
+      <div class="get-book reveal">
+        <div class="book-3d">
+          <div class="book-badge-new">NOVO</div>
+          <div class="bico">🧠</div>
+          <div class="btitle">Livre da Ansiedade</div>
+          <div class="bsub">Guia Definitivo</div>
+        </div>
+        <div class="book-includes">
+          <h4>O que você recebe</h4>
+          <div class="inc-item"><span class="ck">✓</span><span>E-book completo (120+ páginas)</span></div>
+          <div class="inc-item"><span class="ck">✓</span><span>Guia de Exercícios Práticos</span></div>
+          <div class="inc-item"><span class="ck">✓</span><span>Planner 30 Dias Antiansiedade</span></div>
+          <div class="inc-item"><span class="ck">✓</span><span>Checklist de Gatilhos Emocionais</span></div>
+          <div class="inc-item"><span class="ck">✓</span><span>Atualizações futuras gratuitas</span></div>
+        </div>
+      </div>
+      <div class="get-list reveal">
+        <p class="slabel">Conteúdo</p>
+        <h2>120 PÁGINAS QUE VÃO MUDAR SUA RELAÇÃO COM A ANSIEDADE</h2>
+        <p>Conteúdo denso, sem enrolação. Cada capítulo tem ferramentas que você usa no mesmo dia.</p>
+        <div class="chapter-list">
+          <div class="ch-item"><div class="ch-num">01</div><span class="ch-name">O que é ansiedade e por que seu cérebro faz isso</span><span class="ch-pages">18p</span></div>
+          <div class="ch-item"><div class="ch-num">02</div><span class="ch-name">Os gatilhos que você (provavelmente) ignora</span><span class="ch-pages">22p</span></div>
+          <div class="ch-item"><div class="ch-num">03</div><span class="ch-name">Técnicas cognitivas para interromper espirais</span><span class="ch-pages">28p</span></div>
+          <div class="ch-item"><div class="ch-num">04</div><span class="ch-name">Rotina antiansiedade: hábitos que funcionam</span><span class="ch-pages">24p</span></div>
+          <div class="ch-item"><div class="ch-num">05</div><span class="ch-name">Quando buscar ajuda e como aproveitar a terapia</span><span class="ch-pages">16p</span></div>
+          <div class="ch-item"><div class="ch-num">06</div><span class="ch-name">Plano de ação: seus próximos 30 dias</span><span class="ch-pages">14p</span></div>
         </div>
       </div>
     </div>
   </div>
+</section>
+
+<!-- URGENCY SECTION -->
+<section class="urgency">
+  <h2>ESSA OFERTA ACABA EM:</h2>
+  <p>Quando o timer zerar, o preço volta pra R$97. Sem exceção.</p>
+  <div class="urgency-timer">
+    <div class="utb"><span class="unum" id="uh">00</span><span class="ulbl">horas</span></div>
+    <span class="utb-sep">:</span>
+    <div class="utb"><span class="unum" id="um">00</span><span class="ulbl">minutos</span></div>
+    <span class="utb-sep">:</span>
+    <div class="utb"><span class="unum" id="us">00</span><span class="ulbl">segundos</span></div>
+  </div>
+  <br>
+  <a href="#pricing" class="btn-urgency">
+    Garantir por R$37 antes que acabe
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
 </section>
 
 <!-- PRICING -->
 <section class="pricing" id="pricing">
   <div class="container">
-    <p class="section-label reveal">Investimento</p>
-    <h2 class="reveal">Uma decisão que vale uma vida inteira</h2>
-    <p class="pricing-sub reveal">Acesso completo ao e-book, bônus exclusivos e atualizações futuras por um valor único.</p>
+    <div class="pricing-head">
+      <p class="slabel reveal">Investimento</p>
+      <h2 class="reveal">QUANTO VALE RECUPERAR<br>O CONTROLE DA SUA MENTE?</h2>
+      <p class="reveal">Menos do que uma única consulta. Acesso vitalício. Resultado garantido.</p>
+    </div>
     <div class="price-box reveal">
-      <div class="popular-badge">🔥 Mais Popular</div>
+      <div class="price-popular">🔥 Melhor Opção</div>
       <p class="price-title">Livre da Ansiedade — Completo</p>
-      <p class="price-desc">E-book completo + todos os bônus inclusos</p>
-      <p class="price-de">De R$ 97,00</p>
+      <p class="price-desc">E-book + todos os bônus + atualizações para sempre</p>
+      <p class="price-old">De <s>R$ 97,00</s> — <strong>você economiza R$60</strong></p>
       <div class="price-amount">
-        <span class="price-currency">R$</span>
-        <span class="price-value">37</span>
-        <span class="price-cents">,00</span>
+        <span class="price-curr">R$</span>
+        <span class="price-val">37</span>
+        <span class="price-cts">,00</span>
       </div>
-      <p class="price-period">Pagamento único — acesso vitalício</p>
-      <ul class="price-list">
-        <li>E-book completo (120+ páginas em PDF)</li>
-        <li>Guia de Exercícios Práticos (bônus)</li>
-        <li>Planner de 30 Dias Antiansiedade (bônus)</li>
-        <li>Checklist de Gatilhos Emocionais (bônus)</li>
-        <li>Leitura em qualquer dispositivo</li>
-        <li>Atualizações futuras gratuitas</li>
-        <li>Garantia de 7 dias ou seu dinheiro de volta</li>
+      <p class="price-period">Pagamento único · <strong>Acesso vitalício</strong> · Sem mensalidade</p>
+      <ul class="price-includes">
+        <li><span class="ck">✓</span><span>E-book completo com 120+ páginas em PDF</span></li>
+        <li><span class="ck">✓</span><span><strong>Bônus:</strong> Guia de Exercícios Práticos</span></li>
+        <li><span class="ck">✓</span><span><strong>Bônus:</strong> Planner de 30 Dias Antiansiedade</span></li>
+        <li><span class="ck">✓</span><span><strong>Bônus:</strong> Checklist de Gatilhos Emocionais</span></li>
+        <li><span class="ck">✓</span><span>Leitura em qualquer dispositivo (celular, tablet, PC)</span></li>
+        <li><span class="ck">✓</span><span>Todas as atualizações futuras sem custo adicional</span></li>
+        <li><span class="ck">✓</span><span>Garantia incondicional de 7 dias — 100% do dinheiro de volta</span></li>
       </ul>
-      <!-- SUBSTITUA O HREF PELO LINK DA SUA CAKTO -->
+      <!-- SUBSTITUA PELO SEU LINK DA CAKTO -->
       <a href="https://pay.cakto.com.br/qn57cfi_921452" class="btn-buy" target="_blank" rel="noopener">
-        Quero agora por R$ 37,00 →
+        QUERO AGORA POR R$ 37,00 →
       </a>
-      <p class="price-guarantee">🔒 Pagamento 100% seguro via Cakto · Cartão, PIX ou Boleto</p>
+      <p class="price-lock">🔒 Pagamento 100% seguro · <strong>Cakto</strong> · PIX, Cartão ou Boleto</p>
+      <div class="price-urgency-bar">
+        <div class="pul-dot"></div>
+        <span class="pul-text"><strong id="price-vagas">27 pessoas</strong> estão nesta página agora. Este preço pode encerrar a qualquer momento.</span>
+      </div>
     </div>
   </div>
 </section>
@@ -805,153 +1028,147 @@
 <!-- FAQ -->
 <section class="faq">
   <div class="container">
-    <div class="faq-header">
-      <p class="section-label reveal">Dúvidas</p>
-      <h2 class="reveal">Perguntas frequentes</h2>
+    <div class="faq-head">
+      <p class="slabel reveal">Sem dúvidas</p>
+      <h2 class="reveal">PERGUNTAS FREQUENTES</h2>
     </div>
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Como recebo o e-book após a compra?
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">Imediatamente após a confirmação do pagamento, você receberá um e-mail com o link de download direto. O acesso é instantâneo e você pode baixar em qualquer dispositivo.</div>
+        <button class="faq-q" onclick="toggleFaq(this)">Como recebo o e-book?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Imediatamente após a confirmação do pagamento, você recebe um e-mail com o link de download. Acesso instantâneo, sem espera.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Serve para ansiedade severa ou só ansiedade leve?
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">O e-book oferece conteúdo para diferentes níveis de intensidade. Para casos mais severos, ele complementa o tratamento profissional com ferramentas práticas para o dia a dia — e há um capítulo dedicado a quando e como buscar ajuda especializada.</div>
+        <button class="faq-q" onclick="toggleFaq(this)">A garantia é de verdade?<span class="faq-icon">+</span></button>
+        <div class="faq-a">100% de verdade. Se em 7 dias você não ficar satisfeito por qualquer motivo — ou sem motivo nenhum — basta mandar um e-mail e devolvemos tudo. Sem perguntas, sem burocracia, sem julgamento.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Qual é a garantia?
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">Você tem 7 dias para ler o e-book. Se por qualquer motivo não ficar satisfeito, basta enviar um e-mail e devolvemos 100% do seu dinheiro, sem perguntas e sem burocracia.</div>
+        <button class="faq-q" onclick="toggleFaq(this)">Funciona para ansiedade severa?<span class="faq-icon">+</span></button>
+        <div class="faq-a">O e-book oferece conteúdo para diferentes níveis. Para casos mais severos, ele complementa o tratamento profissional com ferramentas práticas para o dia a dia — há um capítulo inteiro dedicado a quando e como buscar ajuda especializada.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          O conteúdo é baseado em ciência?
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">Sim. Todo o conteúdo é fundamentado em pesquisas publicadas de neurociência e psicologia cognitiva, com referências às principais abordagens terapêuticas reconhecidas como TCC, ACT e Mindfulness-Based Stress Reduction (MBSR).</div>
+        <button class="faq-q" onclick="toggleFaq(this)">Posso ler no celular?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Sim. O PDF é otimizado para qualquer dispositivo: celular, tablet, computador ou e-reader. Baixe uma vez e leia offline quando quiser.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Em quanto tempo vejo resultados?
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">Muitos leitores relatam perceber mudanças nas primeiras semanas de aplicação das técnicas. O plano de 30 dias incluído no e-book foi estruturado exatamente para que você tenha resultados progressivos e mensuráveis desde o início.</div>
+        <button class="faq-q" onclick="toggleFaq(this)">O conteúdo tem embasamento científico?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Todo o conteúdo é fundamentado em pesquisas de neurociência e psicologia cognitiva, com base nas abordagens TCC, ACT e MBSR — consideradas padrão ouro no tratamento de ansiedade.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Posso ler no celular?
-          <span class="faq-chevron">▾</span>
-        </button>
-        <div class="faq-a">Sim! O e-book está no formato PDF otimizado para leitura em qualquer dispositivo: celular, tablet, computador ou e-reader. Você pode baixar e ler offline quando quiser.</div>
+        <button class="faq-q" onclick="toggleFaq(this)">Por que tão barato se é tão bom?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Porque e-book não tem custo de impressão, estoque ou entrega. O objetivo é que o máximo de pessoas tenha acesso ao conteúdo. Esta faixa de R$37 é uma oferta de lançamento — o preço sobe quando as vagas desta campanha esgotarem.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- FINAL CTA -->
-<section class="final-cta">
-  <h2>Você merece uma mente <em>livre</em> e tranquila</h2>
-  <p>Por menos do que uma consulta, você tem acesso a um guia completo que pode mudar tudo.</p>
+<section class="final">
+  <h2>VOCÊ MERECE UMA MENTE <span class="red">LIVRE.</span><br>COMECE HOJE.</h2>
+  <p>Cada dia que você espera é um dia que a ansiedade ganha. Mude isso agora.</p>
   <a href="#pricing" class="btn-hero">
-    Garantir meu e-book agora
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    Garantir meu acesso por R$37
+    <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p style="margin-bottom:12px;">
+  <p style="margin-bottom:10px">
     <a href="#">Política de Privacidade</a> &nbsp;·&nbsp;
     <a href="#">Termos de Uso</a> &nbsp;·&nbsp;
     <a href="mailto:contato@seusite.com.br">Contato</a>
   </p>
   <p>© 2025 Livre da Ansiedade. Todos os direitos reservados.</p>
-  <p style="margin-top:8px;font-size:.75rem;">
-    Este produto é um e-book digital. As informações contidas são de caráter educativo e não substituem orientação médica ou psicológica profissional.
+  <p style="margin-top:8px;font-size:.72rem;max-width:600px;margin-left:auto;margin-right:auto">
+    Este produto é um e-book digital para fins educativos. As informações não substituem orientação médica ou psicológica profissional. Resultados podem variar.
   </p>
 </footer>
 
 <script>
-/* ─── CANVAS PARTICLES ─── */
-const canvas = document.getElementById('bg-canvas');
-const ctx    = canvas.getContext('2d');
-let W, H, particles = [];
-
-function resize() {
-  W = canvas.width  = window.innerWidth;
-  H = canvas.height = window.innerHeight;
+/* ── COUNTDOWN TIMER (24h loop) ── */
+function getExpiry() {
+  let exp = localStorage.getItem('lda_expiry');
+  if (!exp || Date.now() > Number(exp)) {
+    exp = Date.now() + 23 * 3600 * 1000 + 47 * 60 * 1000 + 33 * 1000;
+    try { localStorage.setItem('lda_expiry', exp); } catch(e){}
+  }
+  return Number(exp);
 }
-resize();
-window.addEventListener('resize', resize);
+const EXPIRY = getExpiry();
 
-class Particle {
-  constructor() { this.reset(); }
-  reset() {
-    this.x  = Math.random() * W;
-    this.y  = Math.random() * H;
-    this.vx = (Math.random() - .5) * .35;
-    this.vy = (Math.random() - .5) * .35;
-    this.r  = Math.random() * 1.8 + .5;
-    this.a  = Math.random() * .55 + .1;
-  }
-  update() {
-    this.x += this.vx; this.y += this.vy;
-    if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(108,99,255,${this.a})`;
-    ctx.fill();
-  }
+function pad(n) { return String(n).padStart(2,'0'); }
+
+function updateTimers() {
+  const diff = Math.max(0, EXPIRY - Date.now());
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  ['nh','nm','ns'].forEach((id,i) => {
+    const v = [h,m,s][i];
+    const el = document.getElementById(id);
+    if (el) el.textContent = pad(v);
+  });
+  ['uh','um','us'].forEach((id,i) => {
+    const v = [h,m,s][i];
+    const el = document.getElementById(id);
+    if (el) el.textContent = pad(v);
+  });
 }
+updateTimers();
+setInterval(updateTimers, 1000);
 
-for (let i = 0; i < 90; i++) particles.push(new Particle());
-
-(function loop() {
-  ctx.clearRect(0, 0, W, H);
-  particles.forEach(p => { p.update(); p.draw(); });
-
-  /* connect nearby */
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i + 1; j < particles.length; j++) {
-      const dx = particles[i].x - particles[j].x;
-      const dy = particles[i].y - particles[j].y;
-      const d  = Math.sqrt(dx*dx + dy*dy);
-      if (d < 120) {
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = `rgba(108,99,255,${.18 * (1 - d/120)})`;
-        ctx.lineWidth = .6;
-        ctx.stroke();
-      }
-    }
+/* ── STOCK BAR (fake scarcity animation) ── */
+let vagas = 27;
+function updateVagas() {
+  document.getElementById('vagas-num').textContent = vagas + ' restantes';
+  const priceVagas = document.getElementById('price-vagas');
+  if (priceVagas) priceVagas.textContent = vagas + ' pessoas';
+  const pct = (vagas / 100) * 73;
+  const bar = document.getElementById('stock-bar');
+  if (bar) bar.style.width = pct + '%';
+}
+updateVagas();
+setInterval(() => {
+  if (Math.random() < 0.3 && vagas > 7) {
+    vagas = Math.max(7, vagas - 1);
+    updateVagas();
   }
-  requestAnimationFrame(loop);
-})();
+}, 18000);
 
-/* ─── REVEAL ON SCROLL ─── */
-const revealEls = document.querySelectorAll('.reveal');
-const observer  = new IntersectionObserver(entries => {
+/* ── REVEAL ON SCROLL ── */
+const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: .12 });
-revealEls.forEach(el => observer.observe(el));
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-/* ─── FAQ ACCORDION ─── */
+
+/* ── BUYERS COUNTER ── */
+let buyersBase = 1247;
+const onlineBase = 38;
+const lastBuyMins = [2,3,4,5,7,2,3,1,4,6];
+let lbIdx = 0;
+
+function updateBuyers() {
+  if (Math.random() < 0.4) { buyersBase++; }
+  const online = onlineBase + Math.floor(Math.random() * 14) - 7;
+  const bc = document.getElementById('buyers-count');
+  const oc = document.getElementById('online-count');
+  const lb = document.getElementById('last-buy');
+  if (bc) bc.textContent = buyersBase.toLocaleString('pt-BR');
+  if (oc) oc.textContent = Math.max(18, online);
+  if (lb) {
+    lbIdx = (lbIdx + 1) % lastBuyMins.length;
+    lb.textContent = 'há ' + lastBuyMins[lbIdx] + ' min';
+  }
+}
+setInterval(updateBuyers, 22000);
+
+/* ── FAQ ── */
 function toggleFaq(btn) {
   const item = btn.closest('.faq-item');
-  const isOpen = item.classList.contains('open');
+  const open = item.classList.contains('open');
   document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
+  if (!open) item.classList.add('open');
 }
 </script>
 </body>
