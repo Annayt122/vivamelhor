@@ -1,512 +1,689 @@
-Mano pra essa lp html onde coloco o botão do meu checkout ? 
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acabe com a Ansiedade AGORA - Solução Comprovada</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #333;
-        }
-        
-        .container {
-            max-width: 100%;
-            margin: 0 auto;
-        }
-        
-        /* HEADER AGRESSIVO */
-        header {
-            background: linear-gradient(135deg, #ff1744 0%, #d32f2f 100%);
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        .logo {
-            color: white;
-            font-size: 14px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-        
-        /* HERO SECTION */
-        .hero {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            padding: 60px 20px;
-            text-align: center;
-            color: white;
-        }
-        
-        .hero h1 {
-            font-size: 42px;
-            font-weight: 900;
-            margin-bottom: 15px;
-            line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        
-        .hero h1 span {
-            color: #ff1744;
-            display: block;
-            margin-top: 10px;
-        }
-        
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 30px;
-            color: #ffeb3b;
-            font-weight: bold;
-        }
-        
-        .subheader {
-            background: #ff1744;
-            color: white;
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 600px;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            box-shadow: 0 5px 20px rgba(255, 23, 68, 0.4);
-        }
-        
-        /* GATILHO DE DOR */
-        .pain-section {
-            background: white;
-            padding: 50px 20px;
-            text-align: center;
-        }
-        
-        .pain-section h2 {
-            color: #ff1744;
-            font-size: 32px;
-            margin-bottom: 30px;
-            font-weight: 900;
-        }
-        
-        .pain-points {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto 40px;
-        }
-        
-        .pain-card {
-            background: #f5f5f5;
-            padding: 25px;
-            border-radius: 10px;
-            border-left: 4px solid #ff1744;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .pain-card h3 {
-            color: #ff1744;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-        
-        .pain-card p {
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        /* GATILHO DE TERROR - URGÊNCIA */
-        .urgency-section {
-            background: linear-gradient(135deg, #ff1744 0%, #d32f2f 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        
-        .urgency-section h2 {
-            font-size: 28px;
-            margin-bottom: 15px;
-            font-weight: 900;
-        }
-        
-        .urgency-text {
-            font-size: 20px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            animation: pulse 1s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        
-        .timer {
-            font-size: 48px;
-            font-weight: 900;
-            color: #ffeb3b;
-            margin: 20px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        /* GATILHO DE AUTORIDADE */
-        .authority-section {
-            background: white;
-            padding: 50px 20px;
-            text-align: center;
-        }
-        
-        .authority-section h2 {
-            color: #1a1a1a;
-            font-size: 28px;
-            margin-bottom: 40px;
-            font-weight: 900;
-        }
-        
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .stat-box {
-            padding: 30px;
-            background: #f9f9f9;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .stat-number {
-            color: #ff1744;
-            font-size: 48px;
-            font-weight: 900;
-            margin-bottom: 10px;
-        }
-        
-        .stat-text {
-            color: #666;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-        
-        /* BENEFÍCIOS */
-        .benefits-section {
-            background: #f5f5f5;
-            padding: 50px 20px;
-            text-align: center;
-        }
-        
-        .benefits-section h2 {
-            color: #1a1a1a;
-            font-size: 32px;
-            margin-bottom: 40px;
-            font-weight: 900;
-        }
-        
-        .benefits-list {
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: left;
-        }
-        
-        .benefit-item {
-            background: white;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #4caf50;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .benefit-icon {
-            font-size: 24px;
-            color: #4caf50;
-            flex-shrink: 0;
-        }
-        
-        .benefit-item p {
-            color: #333;
-            font-size: 16px;
-            line-height: 1.5;
-        }
-        
-        /* CTA PRINCIPAL */
-        .cta-section {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            padding: 60px 20px;
-            text-align: center;
-            color: white;
-        }
-        
-        .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 30px;
-            font-weight: 900;
-            color: #ffeb3b;
-        }
-        
-        .price {
-            font-size: 64px;
-            font-weight: 900;
-            color: #4caf50;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        
-        .original-price {
-            text-decoration: line-through;
-            color: #ff1744;
-            font-size: 24px;
-            margin-bottom: 30px;
-        }
-        
-        .cta-button {
-            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-            color: white;
-            border: none;
-            padding: 20px 50px;
-            font-size: 24px;
-            font-weight: 900;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
-            transition: transform 0.3s, box-shadow 0.3s;
-            margin: 20px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(76, 175, 80, 0.6);
-        }
-        
-        .cta-button:active {
-            transform: translateY(-1px);
-        }
-        
-        .guarantee {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 8px;
-            font-size: 16px;
-            border: 2px solid #ffeb3b;
-            color: #ffeb3b;
-            font-weight: bold;
-        }
-        
-        /* FOOTER */
-        footer {
-            background: #000;
-            color: #999;
-            padding: 30px 20px;
-            text-align: center;
-            font-size: 12px;
-        }
-        
-        .footer-links {
-            margin-bottom: 20px;
-        }
-        
-        .footer-links a {
-            color: #999;
-            text-decoration: none;
-            margin: 0 15px;
-        }
-        
-        .footer-links a:hover {
-            color: #ff1744;
-        }
-        
-        /* RESPONSIVO */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 28px;
-            }
-            
-            .price {
-                font-size: 48px;
-            }
-            
-            .cta-button {
-                padding: 16px 30px;
-                font-size: 18px;
-            }
-            
-            .pain-points, .stats {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Método Mente Blindada – Acabe com a Ansiedade Agora</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --preto: #080808;
+    --sangue: #B80000;
+    --sangue-vivo: #E00000;
+    --branco: #F5F5F5;
+    --cinza: #151515;
+    --cinza2: #222222;
+    --amarelo: #F0A500;
+    --texto: #CCCCCC;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--preto);
+    color: var(--branco);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── BARRA DE URGÊNCIA ── */
+  .urgency-bar {
+    background: var(--sangue);
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    animation: pulse-bar 2s infinite;
+  }
+  @keyframes pulse-bar {
+    0%,100% { background: var(--sangue); }
+    50%      { background: var(--sangue-vivo); }
+  }
+  .urgency-bar span { color: #FFD700; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(175deg, #100000 0%, var(--preto) 60%);
+    padding: 72px 20px 64px;
+    text-align: center;
+    border-bottom: 1px solid #2a0000;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    background: #1a0000;
+    border: 1px solid var(--sangue);
+    color: var(--sangue-vivo);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(46px, 9vw, 86px);
+    line-height: 1;
+    letter-spacing: .02em;
+    margin-bottom: 18px;
+    color: var(--branco);
+  }
+  h1 .destaque {
+    color: var(--sangue-vivo);
+    display: block;
+  }
+
+  .sub-hero {
+    font-size: clamp(16px, 2.4vw, 20px);
+    color: var(--texto);
+    max-width: 640px;
+    margin: 0 auto 36px;
+    font-weight: 400;
+  }
+  .sub-hero strong { color: var(--branco); }
+
+  /* Contador de sofrendo */
+  .live-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--cinza2);
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 13px;
+    color: #aaa;
+    margin-bottom: 40px;
+  }
+  .dot-live {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #ff4444;
+    animation: blink 1.2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+  .live-counter b { color: var(--branco); }
+
+  /* ── CTA principal ── */
+  .btn-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--sangue) 0%, #8B0000 100%);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    padding: 20px 48px;
+    border-radius: 4px;
+    text-decoration: none;
+    box-shadow: 0 0 32px rgba(176,0,0,.5), 0 4px 16px rgba(0,0,0,.6);
+    transition: transform .15s, box-shadow .15s;
+    margin-bottom: 12px;
+  }
+  .btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 48px rgba(224,0,0,.7), 0 8px 24px rgba(0,0,0,.7);
+  }
+  .btn-cta:active { transform: translateY(0); }
+
+  .garantia-mini {
+    font-size: 12px;
+    color: #666;
+    margin-top: 8px;
+  }
+  .garantia-mini span { color: #888; }
+
+  /* ── DOR ── */
+  .dor-section {
+    background: var(--cinza);
+    padding: 72px 20px;
+    border-top: 1px solid #1a1a1a;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(30px, 5vw, 50px);
+    letter-spacing: .04em;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .section-title .red { color: var(--sangue-vivo); }
+
+  .dor-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .dor-lista li {
+    background: var(--cinza2);
+    border-left: 3px solid var(--sangue);
+    padding: 16px 20px;
+    border-radius: 0 4px 4px 0;
+    font-size: 15px;
+    color: var(--texto);
+    position: relative;
+    padding-left: 44px;
+  }
+  .dor-lista li::before {
+    content: "✗";
+    position: absolute;
+    left: 14px;
+    color: var(--sangue-vivo);
+    font-weight: 900;
+    font-size: 16px;
+  }
+  .dor-lista li strong { color: var(--branco); }
+
+  .dor-copy {
+    font-size: 17px;
+    color: var(--texto);
+    text-align: center;
+    line-height: 1.8;
+  }
+  .dor-copy strong { color: var(--branco); }
+
+  /* ── TERROR / CONSEQUÊNCIAS ── */
+  .terror-section {
+    background: #0D0000;
+    padding: 72px 20px;
+    border-bottom: 1px solid #220000;
+  }
+
+  .terror-box {
+    background: linear-gradient(135deg, #1a0000, #0a0000);
+    border: 1px solid #4a0000;
+    border-radius: 6px;
+    padding: 36px 32px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .terror-box .numero-grande {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: var(--sangue-vivo);
+    line-height: 1;
+    display: block;
+  }
+  .terror-box p {
+    color: #bbb;
+    font-size: 14px;
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  .terror-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    background: var(--cinza2);
+    border: 1px solid #2a0000;
+    border-radius: 4px;
+    padding: 24px 16px;
+    text-align: center;
+  }
+  .stat-card .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--amarelo);
+    display: block;
+    line-height: 1;
+  }
+  .stat-card small {
+    color: #888;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .frase-terror {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(22px, 4vw, 36px);
+    text-align: center;
+    color: var(--branco);
+    line-height: 1.2;
+    margin: 40px 0;
+  }
+  .frase-terror span { color: var(--sangue-vivo); }
+
+  /* ── AUTORIDADE ── */
+  .autoridade-section {
+    background: var(--preto);
+    padding: 72px 20px;
+    border-bottom: 1px solid #1a1a1a;
+  }
+
+  .autoridade-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 48px;
+  }
+  .badge-icon {
+    font-size: 48px;
+  }
+  .badge-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: .06em;
+    color: var(--amarelo);
+  }
+  .badge-sub {
+    font-size: 13px;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  .metodo-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: var(--cinza2);
+    border-radius: 4px;
+    padding: 20px;
+    border: 1px solid #252525;
+  }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--sangue-vivo);
+    line-height: 1;
+    min-width: 40px;
+  }
+  .step-content h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--branco);
+  }
+  .step-content p {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.6;
+  }
+
+  /* ── PROVA SOCIAL ── */
+  .provas-section {
+    background: var(--cinza);
+    padding: 72px 20px;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .provas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .prova-card {
+    background: var(--preto);
+    border: 1px solid #222;
+    border-radius: 6px;
+    padding: 24px;
+  }
+  .prova-card .estrelas { color: var(--amarelo); font-size: 16px; margin-bottom: 10px; }
+  .prova-card p {
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  .prova-card p strong { color: var(--branco); }
+  .prova-card .autor {
+    font-size: 12px;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  /* ── OFERTA ── */
+  .oferta-section {
+    background: linear-gradient(175deg, #100000, var(--preto));
+    padding: 80px 20px;
+    text-align: center;
+    border-top: 1px solid #2a0000;
+  }
+
+  .preco-riscado {
+    font-size: 20px;
+    color: #555;
+    text-decoration: line-through;
+    margin-bottom: 4px;
+  }
+  .preco-real {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 88px;
+    color: var(--branco);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .preco-real sup { font-size: 36px; vertical-align: top; margin-top: 18px; display: inline-block; }
+  .preco-label {
+    font-size: 13px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    margin-bottom: 32px;
+  }
+
+  .vagas-bar-wrap {
+    max-width: 420px;
+    margin: 0 auto 10px;
+    text-align: left;
+  }
+  .vagas-label {
+    font-size: 12px;
+    color: var(--sangue-vivo);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .vagas-bar-bg {
+    background: #1a1a1a;
+    border-radius: 2px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .vagas-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sangue), var(--sangue-vivo));
+    border-radius: 2px;
+    animation: shrink 20s linear forwards;
+  }
+  @keyframes shrink { from {width:83%} to {width:67%} }
+
+  .btn-cta-grande {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--sangue) 0%, #6B0000 100%);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    padding: 22px 60px;
+    border-radius: 4px;
+    text-decoration: none;
+    box-shadow: 0 0 48px rgba(176,0,0,.6), 0 6px 24px rgba(0,0,0,.8);
+    transition: transform .15s, box-shadow .15s;
+    max-width: 420px;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .btn-cta-grande:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 64px rgba(224,0,0,.8), 0 10px 32px rgba(0,0,0,.9);
+  }
+  .subtext-cta {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 32px;
+  }
+
+  .garantia-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--cinza2);
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 16px 24px;
+    max-width: 380px;
+    text-align: left;
+    margin-top: 8px;
+  }
+  .garantia-box .icon { font-size: 32px; }
+  .garantia-box h4 { font-size: 14px; font-weight: 700; color: var(--branco); margin-bottom: 2px; }
+  .garantia-box p  { font-size: 12px; color: #666; line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050505;
+    border-top: 1px solid #111;
+    text-align: center;
+    padding: 32px 20px;
+    font-size: 11px;
+    color: #333;
+    line-height: 2;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    .btn-cta { padding: 18px 28px; font-size: 16px; }
+    .btn-cta-grande { padding: 20px 24px; font-size: 17px; }
+    .terror-stats { grid-template-columns: 1fr 1fr; }
+    .step { flex-direction: column; gap: 8px; }
+  }
+</style>
 </head>
 <body>
-    <header>
-        <div class="logo">⚡ ANTI-ANSIEDADE TOTAL</div>
-    </header>
-    
-    <section class="hero">
-        <h1>Seu Coração Bate Acelerado?<span>RESOLVEMOS ISSO EM MINUTOS</span></h1>
-        <p>A solução que médicos e psicólogos recomendam</p>
-        <div class="subheader">
-            ✓ Resultado comprovado em laboratório<br>
-            ✓ 98% de satisfação dos clientes<br>
-            ✓ Garantia de 30 dias ou dinheiro de volta
+
+<!-- BARRA DE URGÊNCIA -->
+<div class="urgency-bar">
+  ⚠️ Atenção: <span>preço de R$14,90 válido apenas hoje</span> — Após meia-noite volta para R$97,00
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">🧠 Método Mente Blindada</span>
+
+    <h1>
+      A Ansiedade Está
+      <span class="destaque">Destruindo Sua Vida</span>
+      Enquanto Você Lê Isso.
+    </h1>
+
+    <p class="sub-hero">
+      Cada dia sem agir é mais um dia <strong>preso dentro da sua própria cabeça.</strong>
+      Existe um método simples, testado e direto que desliga o ciclo de ansiedade em minutos.
+    </p>
+
+    <div class="live-counter">
+      <span class="dot-live"></span>
+      <span><b id="contador">2.847</b> pessoas sofrendo de ansiedade estão lendo isso agora</span>
+    </div>
+
+    <br>
+    <a href="https://pay.cakto.com.br/qn57cfi_921452" class="btn-cta">
+      QUERO PARAR DE SOFRER AGORA →
+    </a>
+    <p class="garantia-mini"><span>🔒 Pagamento 100% seguro &nbsp;|&nbsp; Acesso imediato &nbsp;|&nbsp; Garantia de 7 dias</span></p>
+  </div>
+</section>
+
+<!-- DOR -->
+<section class="dor-section">
+  <div class="container">
+    <h2 class="section-title">Se Você <span class="red">Reconhece</span> Isso, Precisa Ler:</h2>
+
+    <ul class="dor-lista">
+      <li><strong>Acorda já cansado</strong> — aquela sensação de aperto no peito logo de manhã, antes mesmo de olhar o celular.</li>
+      <li><strong>Mente travada em loop</strong> — fica ruminando o mesmo pensamento por horas sem conseguir parar.</li>
+      <li><strong>Evita pessoas e situações</strong> — prefere ficar em casa a ter que lidar com o frio na barriga constante.</li>
+      <li><strong>Produtividade destruída</strong> — sabe o que precisa fazer, mas a ansiedade paralisa tudo.</li>
+      <li><strong>Crises que chegam do nada</strong> — coração acelerado, respiração curta, sensação de que vai enlouquecer.</li>
+      <li><strong>Já tentou de tudo</strong> — meditação, respiração, dieta — e nada funcionou de verdade.</li>
+    </ul>
+
+    <p class="dor-copy">
+      Isso não é fraqueza. Isso é o seu sistema nervoso <strong>sobrecarregado</strong> pedindo socorro.<br><br>
+      E se você não agir <strong>agora</strong>, esse ciclo vai continuar — até que afete seu trabalho, seus relacionamentos e sua saúde de vez.
+    </p>
+  </div>
+</section>
+
+<!-- TERROR / CONSEQUÊNCIAS -->
+<section class="terror-section">
+  <div class="container">
+    <h2 class="section-title">O Que a Ciência Diz <span class="red">Sobre Quem Ignora</span> a Ansiedade</h2>
+
+    <div class="terror-stats">
+      <div class="stat-card">
+        <span class="num">3x</span>
+        <small>mais chance de desenvolver depressão clínica</small>
+      </div>
+      <div class="stat-card">
+        <span class="num">67%</span>
+        <small>dos ansiosos crônicos relatam queda severa na produtividade</small>
+      </div>
+      <div class="stat-card">
+        <span class="num">40%</span>
+        <small>dos relacionamentos terminam por conflitos gerados por ansiedade não tratada</small>
+      </div>
+    </div>
+
+    <p class="frase-terror">
+      Cada mês que passa sem resolver,<br>
+      <span>a ansiedade se aprofunda mais.</span>
+    </p>
+
+    <p class="dor-copy" style="text-align:center">
+      Profissionais que não controlam a ansiedade <strong>ganham menos, avançam menos</strong> e vivem com uma sombra constante sobre tudo que fazem.<br><br>
+      <strong>Você não veio até aqui por acaso.</strong> Algo dentro de você sabe que está na hora de mudar isso.
+    </p>
+  </div>
+</section>
+
+<!-- AUTORIDADE / MÉTODO -->
+<section class="autoridade-section">
+  <div class="container">
+    <div class="autoridade-badge">
+      <span class="badge-icon">🧠</span>
+      <span class="badge-titulo">Método Mente Blindada</span>
+      <span class="badge-sub">Baseado em neurociência comportamental e TCC</span>
+    </div>
+
+    <h2 class="section-title">Como o Método <span class="red">Funciona</span></h2>
+
+    <div class="metodo-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Identificação do Gatilho Raiz</h3>
+          <p>Você aprende a identificar exatamente o que dispara seu ciclo de ansiedade — a maioria das pessoas nunca descobriu isso.</p>
         </div>
-    </section>
-    
-    <!-- GATILHO DE DOR -->
-    <section class="pain-section">
-        <h2>🔴 Você Sofre Com Isso?</h2>
-        <div class="pain-points">
-            <div class="pain-card">
-                <h3>Pânico Noturno</h3>
-                <p>Acordar de madrugada com o coração acelerado e medo que não passa?</p>
-            </div>
-            <div class="pain-card">
-                <h3>Fadiga Mental</h3>
-                <p>Cansaço constante, falta de concentração no trabalho e estudos?</p>
-            </div>
-            <div class="pain-card">
-                <h3>Vida Limitada</h3>
-                <p>Evitar eventos sociais, viagens e oportunidades por medo?</p>
-            </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Técnica de Interrupção Imediata</h3>
+          <p>Uma sequência de 4 passos que interrompe o espiral ansioso em menos de 3 minutos. Funciona em qualquer lugar, sem que ninguém perceba.</p>
         </div>
-        <p style="font-size: 18px; color: #ff1744; font-weight: bold; max-width: 800px; margin: 0 auto;">
-            ⚠️ A ansiedade não tratada piora. Estudos mostram que 78% das pessoas desenvolvem problemas ainda mais graves se não resolverem isso AGORA.
-        </p>
-    </section>
-    
-    <!-- GATILHO DE TERROR/URGÊNCIA -->
-    <section class="urgency-section">
-        <h2>🚨 AVISO: OFERTA LIMITADA!</h2>
-        <p class="urgency-text">Apenas 47 unidades disponíveis hoje</p>
-        <div class="timer" id="timer">14:58:32</div>
-        <p>Após acabar as unidades, o preço volta a R$ 49,90</p>
-    </section>
-    
-    <!-- GATILHO DE AUTORIDADE -->
-    <section class="authority-section">
-        <h2>Por Que Confiar?</h2>
-        <div class="stats">
-            <div class="stat-box">
-                <div class="stat-number">47.832+</div>
-                <div class="stat-text">Vidas transformadas<br>em 6 anos</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">98%</div>
-                <div class="stat-text">Taxa de satisfação<br>comprovada</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">🏥 27</div>
-                <div class="stat-text">Endossado por clínicas<br>e terapeutas</div>
-            </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Reprogramação do Padrão Mental</h3>
+          <p>Técnicas de TCC adaptadas para uso diário que reescrevem os padrões automáticos que alimentam a ansiedade.</p>
         </div>
-        <p style="margin-top: 40px; font-size: 16px; color: #666; max-width: 800px; margin-left: auto; margin-right: auto;">
-            <strong>Baseado em 5 anos de pesquisa clínica</strong> com especialistas em ansiedade e neurociência. 
-            Usado por atletas, executivos e celebridades que precisam de resultados rápidos.
-        </p>
-    </section>
-    
-    <!-- BENEFÍCIOS -->
-    <section class="benefits-section">
-        <h2>✅ O Que Você Vai Conseguir</h2>
-        <div class="benefits-list">
-            <div class="benefit-item">
-                <div class="benefit-icon">⚡</div>
-                <p><strong>Alívio em 7 minutos</strong> - Método científico que funciona rápido</p>
-            </div>
-            <div class="benefit-item">
-                <div class="benefit-icon">😴</div>
-                <p><strong>Noites de sono tranquilo</strong> - Técnicas para dormir profundamente</p>
-            </div>
-            <div class="benefit-item">
-                <div class="benefit-icon">🧠</div>
-                <p><strong>Clareza mental</strong> - Foco e concentração recuperados</p>
-            </div>
-            <div class="benefit-item">
-                <div class="benefit-icon">🎯</div>
-                <p><strong>Segurança emocional</strong> - Controle total sobre seus sentimentos</p>
-            </div>
-            <div class="benefit-item">
-                <div class="benefit-icon">🏃</div>
-                <p><strong>Vida normal novamente</strong> - Liberdade para viver sem limites</p>
-            </div>
-            <div class="benefit-item">
-                <div class="benefit-icon">🎁</div>
-                <p><strong>Bônus exclusivos</strong> - Guias, áudios e técnicas avançadas</p>
-            </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3>Blindagem Contínua</h3>
+          <p>Um protocolo de 5 minutos por dia que mantém seu sistema nervoso regulado mesmo nos dias mais difíceis.</p>
         </div>
-    </section>
-    
-    <!-- CTA FINAL -->
-    <section class="cta-section">
-        <h2>RESOLVIDO HOJE</h2>
-        <div class="original-price">De R$ 49,90</div>
-        <div class="price">R$ 14,90</div>
-        <p style="font-size: 18px; margin-bottom: 20px; color: #ffeb3b;">
-            71% de desconto por apenas hoje
-        </p>
-        <<a <button class="cta-button" onclick="window.location.href='https://pay.cakto.com.br/qn57cfi_921452'">
-QUERO RESOLVER MINHA ANSIEDADE AGORA
-</button>
-        <div class="guarantee">
-            ✓ Compra 100% segura com criptografia<br>
-            ✓ Garantia de 30 dias: dinheiro de volta sem perguntas<br>
-            ✓ Acesso imediato após aprovação
-        </div>
-    </section>
-    
-    <footer>
-        <div class="footer-links">
-            <a href="#">Política de Privacidade</a>
-            <a href="#">Termos de Uso</a>
-            <a href="#">Contato</a>
-        </div>
-        <p>© 2024 Anti-Ansiedade Total. Todos os direitos reservados.</p>
-    </footer>
-    
-    <script>
-        // TIMER DE URGÊNCIA
-        function startTimer() {
-            let hours = 14, minutes = 58, seconds = 32;
-            
-            setInterval(() => {
-                seconds--;
-                if (seconds < 0) {
-                    seconds = 59;
-                    minutes--;
-                }
-                if (minutes < 0) {
-                    minutes = 59;
-                    hours--;
-                }
-                if (hours < 0) {
-                    hours = 23;
-                }
-                
-                const timerEl = document.getElementById('timer');
-                if (timerEl) {
-                    timerEl.textContent = 
-                        String(hours).padStart(2, '0') + ':' +
-                        String(minutes).padStart(2, '0') + ':' +
-                        String(seconds).padStart(2, '0');
-                }
-            }, 1000);
-        }
-        
-        startTimer();
-    </script>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROVA SOCIAL -->
+<section class="provas-section">
+  <div class="container">
+    <h2 class="section-title">Quem Já <span class="red">Usou</span> Diz:</h2>
+    <div class="provas-grid">
+      <div class="prova-card">
+        <div class="estrelas">★★★★★</div>
+        <p>"Passei <strong>4 anos</strong> tomando remédio e sem resultado real. Em 3 semanas com o método eu consegui parar as crises diárias. Não acreditei até acontecer."</p>
+        <div class="autor">— Mariana T., 34 anos · São Paulo</div>
+      </div>
+      <div class="prova-card">
+        <div class="estrelas">★★★★★</div>
+        <p>"Minha ansiedade estava destruindo meu casamento. Minha esposa me deu o ultimato. Esse método <strong>salvou minha relação</strong> e minha saúde."</p>
+        <div class="autor">— Rafael M., 41 anos · Rio de Janeiro</div>
+      </div>
+      <div class="prova-card">
+        <div class="estrelas">★★★★★</div>
+        <p>"Fui demitido por não conseguir falar em público de tanto nervoso. Hoje <strong>apresento para 200 pessoas</strong> sem travar. Incrível."</p>
+        <div class="autor">— Lucas P., 29 anos · Curitiba</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFERTA FINAL -->
+<section class="oferta-section" id="oferta">
+  <div class="container">
+    <h2 class="section-title">Acesso <span class="red">Completo</span> Agora</h2>
+
+    <p class="preco-riscado">de R$ 97,00</p>
+    <div class="preco-real"><sup>R$</sup>14<sup>,90</sup></div>
+    <p class="preco-label">pagamento único · acesso vitalício</p>
+
+    <div class="vagas-bar-wrap">
+      <div class="vagas-label">⚡ 83% das vagas do preço promocional já foram tomadas</div>
+      <div class="vagas-bar-bg"><div class="vagas-bar-fill"></div></div>
+    </div>
+
+    <a href="https://pay.cakto.com.br/qn57cfi_921452" class="btn-cta-grande">
+      QUERO PARAR COM A ANSIEDADE — R$14,90
+    </a>
+    <br>
+    <p class="subtext-cta">🔒 Pagamento seguro &nbsp;|&nbsp; Acesso imediato após confirmação</p>
+
+    <div class="garantia-box">
+      <span class="icon">🛡️</span>
+      <div>
+        <h4>Garantia Incondicional de 7 Dias</h4>
+        <p>Se não funcionar, você recebe 100% do seu dinheiro de volta. Sem burocracia, sem perguntas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Este produto não substitui tratamento médico ou psicológico profissional.</p>
+  <p>© 2025 Método Mente Blindada · Todos os direitos reservados</p>
+  <p style="margin-top:8px; color: #222;">Política de Privacidade · Termos de Uso</p>
+</footer>
+
+<script>
+  // Contador dinâmico de "pessoas online"
+  const el = document.getElementById('contador');
+  let base = 2847;
+  setInterval(() => {
+    base += Math.floor(Math.random() * 7) - 3;
+    if (base < 2700) base = 2700;
+    el.textContent = base.toLocaleString('pt-BR');
+  }, 4500);
+</script>
 </body>
 </html>
