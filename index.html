@@ -1,1175 +1,1065 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Livre da Ansiedade — Oferta Especial</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --black:#050508;
-  --dark:#0D0D12;
-  --card:#111118;
-  --red:#FF3B3B;
-  --red2:#CC1C1C;
-  --gold:#FFD700;
-  --gold2:#F59E0B;
-  --white:#F8F8FF;
-  --muted:#6B6B80;
-  --border:rgba(255,255,255,.07);
-  --green:#22C55E;
-}
-html{scroll-behavior:smooth}
-body{
-  background:var(--black);
-  color:var(--white);
-  font-family:'Inter',sans-serif;
-  line-height:1.6;
-  overflow-x:hidden;
-}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:var(--black)}
-::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px}
+<html lang="pt-BR" style="background-color: transparent;"><head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.13/html-to-image.min.js" integrity="sha512-iZ2ORl595Wx6miw+GuadDet4WQbdSWS3JLMoNfY8cRGoEFy6oT3G9IbcrBeL6AfkgpA51ETt/faX6yLV+/gFJg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      (function() {
+        // Capture host references before any artifact code runs: Window.parent
+        // is [Replaceable] (a top-level `var parent` in artifact code would
+        // replace the accessor with a data property), and a top-level
+        // `const crypto` would shadow the global — either would otherwise
+        // silently break the bridge for artifacts that worked before.
+        const realParent = window.parent;
+        const cryptoObj = window.crypto;
+        // crypto.randomUUID exists only in Secure Contexts; fall back to a
+        // unique non-crypto id elsewhere (http://LAN-IP dev flows) —
+        // uniqueness is what the bridge needs, unpredictability is
+        // defense-in-depth on top of the source guards.
+        const newRequestId =
+          cryptoObj && typeof cryptoObj.randomUUID === "function"
+            ? function () { return cryptoObj.randomUUID(); }
+            : function () { return Date.now() + "-" + Math.random(); };
+        const originalConsole = window.console;
+        window.console = {
+          log: (...args) => {
+            originalConsole.log(...args);
+            realParent.postMessage({ type: 'console', message: args.join(' ') }, '*');
+          },
+          error: (...args) => {
+            originalConsole.error(...args);
+            realParent.postMessage({ type: 'console', message: 'Error: ' + args.join(' ') }, '*');
+          },
+          warn: (...args) => {
+            originalConsole.warn(...args);
+            realParent.postMessage({ type: 'console', message: 'Warning: ' + args.join(' ') }, '*');
+          }
+        };
 
-/* ── ANNOUNCEMENT BAR ── */
-.announce{
-  background:var(--red);
-  padding:10px 16px;
-  text-align:center;
-  font-size:.82rem;
-  font-weight:700;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  position:relative;
-  overflow:hidden;
-}
-.announce::before{
-  content:'';
-  position:absolute;inset:0;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
-  animation:shine 2.5s infinite;
-}
-@keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+        // Bridge request ids are crypto-random (not sequential) so they
+        // cannot be predicted by other frames in the tab.
+        let callbacksMap = new Map();
+        let streamControllers = new Map();
+        
+        window.claude = {
+          complete: (prompt) => {
+            return new Promise((resolve, reject) => {
+              const id = newRequestId();
+              callbacksMap.set(id, { resolve, reject });
+              realParent.postMessage({ type: 'claudeComplete', id, prompt }, '*');
+            });
+          }
+        };
 
-/* ── NAV ── */
-nav{
-  position:sticky;top:0;z-index:100;
-  background:rgba(5,5,8,.92);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);
-  padding:14px 32px;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:16px;
-}
-.nav-logo{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.4rem;letter-spacing:.06em;
-  color:var(--white);
-}
-.nav-timer-wrap{
-  display:flex;align-items:center;gap:10px;
-  font-size:.78rem;color:var(--muted);
-}
-.nav-timer{
-  display:flex;gap:6px;
-}
-.timer-block{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:6px;
-  padding:4px 8px;
-  text-align:center;
-  min-width:38px;
-}
-.timer-block .num{
-  display:block;
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.1rem;letter-spacing:.04em;
-  color:var(--red);
-  line-height:1;
-}
-.timer-block .lbl{
-  display:block;
-  font-size:.6rem;color:var(--muted);
-  text-transform:uppercase;letter-spacing:.06em;
-  margin-top:1px;
-}
-.nav-cta{
-  background:var(--red);
-  color:#fff;font-weight:700;font-size:.82rem;
-  border:none;border-radius:6px;
-  padding:10px 20px;cursor:pointer;
-  text-decoration:none;
-  letter-spacing:.04em;
-  text-transform:uppercase;
-  transition:background .2s,transform .2s;
-  white-space:nowrap;
-}
-.nav-cta:hover{background:var(--red2);transform:scale(1.03)}
+        window.storage = {
+          get: (key, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = newRequestId();
+              callbacksMap.set(id, { resolve, reject });
+              realParent.postMessage({ type: 'storageGet', id, key, shared }, '*');
+            });
+          },
+          set: (key, value, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = newRequestId();
+              callbacksMap.set(id, { resolve, reject });
+              realParent.postMessage({ type: 'storageSet', id, key, value, shared }, '*');
+            });
+          },
+          delete: (key, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = newRequestId();
+              callbacksMap.set(id, { resolve, reject });
+              realParent.postMessage({ type: 'storageDelete', id, key, shared }, '*');
+            });
+          },
+          list: (prefix, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = newRequestId();
+              callbacksMap.set(id, { resolve, reject });
+              realParent.postMessage({ type: 'storageList', id, prefix, shared }, '*');
+            });
+          }
+        };
 
-/* ── HERO ── */
-.hero{
-  min-height:100vh;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;
-  padding:80px 20px 60px;
-  position:relative;
-  overflow:hidden;
-}
-.hero-noise{
-  position:absolute;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
-  pointer-events:none;opacity:.4;
-}
-.hero-glow{
-  position:absolute;
-  width:700px;height:700px;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(255,59,59,.12) 0%,transparent 70%);
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  pointer-events:none;
-  animation:pulse-glow 4s ease-in-out infinite;
-}
-@keyframes pulse-glow{
-  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.8}
-  50%{transform:translate(-50%,-50%) scale(1.15);opacity:1}
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(255,59,59,.1);
-  border:1px solid rgba(255,59,59,.3);
-  border-radius:4px;
-  padding:7px 16px;
-  font-size:.75rem;font-weight:700;
-  letter-spacing:.12em;text-transform:uppercase;
-  color:var(--red);
-  margin-bottom:28px;
-  position:relative;z-index:1;
-}
-.hero-badge .dot{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--red);
-  animation:blink 1.2s infinite;
-}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-.hero h1{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(3rem,9vw,8rem);
-  line-height:.95;
-  letter-spacing:.03em;
-  max-width:900px;
-  margin-bottom:10px;
-  position:relative;z-index:1;
-}
-.hero h1 .red{color:var(--red)}
-.hero h1 .gold{color:var(--gold)}
-.hero-sub{
-  font-size:clamp(1rem,2vw,1.25rem);
-  color:var(--muted);
-  max-width:580px;
-  margin-bottom:36px;
-  font-weight:400;
-  position:relative;z-index:1;
-  line-height:1.65;
-}
-.hero-sub strong{color:var(--white);font-weight:700}
+        let pendingBlobs = new Map();
+        URL.createObjectURL = (blob) => {
+          // Store the blob and create an ID and URL for it
+          const blobId = `blob-${Date.now()}-${Math.random()}`;
+          pendingBlobs.set(blobId, blob);
+          return `blob-request://${blobId}`;
+        };
 
-/* STOCK BAR */
-.stock-wrap{
-  width:100%;max-width:520px;
-  margin-bottom:36px;
-  position:relative;z-index:1;
-}
-.stock-label{
-  display:flex;justify-content:space-between;
-  font-size:.78rem;font-weight:600;
-  margin-bottom:8px;
-}
-.stock-label .left{color:var(--muted)}
-.stock-label .right{color:var(--red);font-weight:700}
-.stock-bar-bg{
-  width:100%;height:8px;
-  background:rgba(255,255,255,.08);
-  border-radius:4px;overflow:hidden;
-}
-.stock-bar-fill{
-  height:100%;
-  background:linear-gradient(90deg,var(--red2),var(--red));
-  border-radius:4px;
-  width:73%;
-  position:relative;
-  animation:stock-pulse 2s ease-in-out infinite;
-}
-@keyframes stock-pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}
+        URL.revokeObjectURL = (url) => {
+          // Remove the blob from our store
+          const blobId = url.replace("blob-request://", "");
+          pendingBlobs.delete(blobId);
+        };
 
-.btn-hero{
-  display:inline-flex;align-items:center;gap:12px;
-  background:var(--red);
-  color:#fff;border:none;border-radius:8px;
-  padding:20px 48px;
-  font-size:1.1rem;font-weight:800;
-  cursor:pointer;text-decoration:none;
-  letter-spacing:.04em;text-transform:uppercase;
-  box-shadow:0 0 48px rgba(255,59,59,.4),0 4px 0 var(--red2);
-  transition:transform .15s,box-shadow .15s;
-  position:relative;z-index:1;
-}
-.btn-hero:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 72px rgba(255,59,59,.6),0 6px 0 var(--red2);
-}
-.btn-hero:active{transform:translateY(1px);box-shadow:0 0 32px rgba(255,59,59,.3),0 2px 0 var(--red2)}
-.btn-arrow{transition:transform .2s}
-.btn-hero:hover .btn-arrow{transform:translateX(4px)}
+        const getBlobFromURL = (url) => {
+          const blobId = url.replace("blob-request://", "");
+          return pendingBlobs.get(blobId);
+        };
 
-.hero-guarantee{
-  margin-top:16px;
-  font-size:.78rem;color:var(--muted);
-  display:flex;align-items:center;gap:6px;
-  justify-content:center;
-  position:relative;z-index:1;
-}
-.hero-guarantee strong{color:var(--green)}
+        // Override global fetch with streaming support
+        window.fetch = (url, init = {}) => {
+          return new Promise((resolve, reject) => {
+            const id = newRequestId();
+            const channelId = `fetch-${id}-${Date.now()}`;
+            
+            callbacksMap.set(id, { 
+              resolve: (response) => {
+                // Null-body statuses: Response(stream, {status: 204}) throws
+                // per the Fetch spec, which would escape this resolver and
+                // hang the artifact's await forever.
+                if (response.status === 204 || response.status === 205 || response.status === 304) {
+                  try {
+                    resolve(new Response(null, {
+                      status: response.status,
+                      statusText: response.statusText,
+                      headers: response.headers
+                    }));
+                  } catch (err) {
+                    // Invalid statusText/header bytes can throw here too.
+                    reject(new TypeError(
+                      'Bridge fetch: unconstructable response (status ' + response.status + ')'
+                    ));
+                  }
+                  return;
+                }
+                // Create a ReadableStream for the response body
+                const stream = new ReadableStream({
+                  start(controller) {
+                    streamControllers.set(channelId, controller);
+                  },
+                  cancel() {
+                    streamControllers.delete(channelId);
+                  }
+                });
+                
+                // Create and return the Response with the stream. Response()
+                // requires status in [200, 599]; an opaque/no-cors fetch
+                // forwards status 0, which would throw here and escape the
+                // resolver, hanging the artifact's await. Surface it as a
+                // network-error-shaped rejection instead.
+                try {
+                  resolve(new Response(stream, {
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: response.headers
+                  }));
+                } catch (err) {
+                  streamControllers.delete(channelId);
+                  reject(new TypeError(
+                    'Bridge fetch: unconstructable response (status ' + response.status + ')'
+                  ));
+                }
+              },
+              reject,
+              channelId
+            });
+            
+            realParent.postMessage({
+              type: 'proxyFetch',
+              id,
+              url,
+              init,
+              channelId
+            }, '*');
+          });
+        };
 
-/* TRUST STRIP */
-.trust-strip{
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  padding:20px 32px;
-  display:flex;align-items:center;justify-content:center;
-  flex-wrap:wrap;gap:32px;
-}
-.trust-item{
-  display:flex;align-items:center;gap:8px;
-  font-size:.85rem;color:var(--muted);
-}
-.trust-item .icon{font-size:1.1rem}
-.trust-item strong{color:var(--white)}
+        window.addEventListener('message', async (event) => {
+          // Only the embedding parent may drive the bridge — sibling and
+          // nested frames can also postMessage into this window.
+          if (event.source !== realParent) return;
+          if (event.data.type === 'takeScreenshot') {
+            // Echo the request's nonce so the requester can correlate the
+            // reply to ITS request — a reply without the expected nonce
+            // (e.g. from a stale pre-remount artifact) is ignored upstream.
+            const screenshotNonce = event.data.nonce;
+            const rootElement = document.getElementById('artifacts-component-root-html');
+            if (!rootElement) {
+              realParent.postMessage({
+                type: 'screenshotError',
+                nonce: screenshotNonce,
+                error: new Error('Root element not found'),
+              }, '*');
+              return;
+            }
+            // Catch CDN load failures (htmlToImage undefined) and toPng errors
+            // so the parent always gets a response instead of hanging forever.
+            try {
+              const screenshot = await htmlToImage.toPng(rootElement, {
+                imagePlaceholder:
+                  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjePDgwX8ACOQDoNsk0PMAAAAASUVORK5CYII=",
+              });
+              realParent.postMessage({
+                type: 'screenshotData',
+                nonce: screenshotNonce,
+                data: screenshot,
+              }, '*');
+            } catch (err) {
+              realParent.postMessage({
+                type: 'screenshotError',
+                nonce: screenshotNonce,
+                error: err instanceof Error ? err : new Error(String(err)),
+              }, '*');
+            }
+          } else if (event.data.type === 'claudeComplete') {
+            const callback = callbacksMap.get(event.data.id);
+            if (!callback) return;
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.completion);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'proxyFetchResponse') {
+            const callback = callbacksMap.get(event.data.id);
+            if (!callback) return;
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+              callbacksMap.delete(event.data.id);
+            } else {
+              // Initial response with headers, status, etc.
+              callback.resolve({
+                status: event.data.status,
+                statusText: event.data.statusText,
+                headers: event.data.headers
+              });
+              // Don't delete the callback yet if streaming
+              if (!event.data.body) {
+                callbacksMap.delete(event.data.id);
+              }
+            }
+          } else if (event.data.type === 'proxyFetchStream') {
+            // Handle streaming data chunks
+            const controller = streamControllers.get(event.data.channelId);
+            if (controller) {
+              if (event.data.error) {
+                controller.error(new Error(event.data.error));
+                streamControllers.delete(event.data.channelId);
+              } else if (event.data.done) {
+                controller.close();
+                streamControllers.delete(event.data.channelId);
+                // Clean up the callback
+                const callback = Array.from(callbacksMap.entries()).find(
+                  ([_, value]) => value.channelId === event.data.channelId
+                );
+                if (callback) {
+                  callbacksMap.delete(callback[0]);
+                }
+              } else if (event.data.chunk) {
+                controller.enqueue(new Uint8Array(event.data.chunk));
+              }
+            }
+          } else if (event.data.type === 'storageGet') {
+            const callback = callbacksMap.get(event.data.id);
+            if (!callback) return;
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageSet') {
+            const callback = callbacksMap.get(event.data.id);
+            if (!callback) return;
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageDelete') {
+            const callback = callbacksMap.get(event.data.id);
+            if (!callback) return;
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageList') {
+            const callback = callbacksMap.get(event.data.id);
+            if (!callback) return;
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          }
+        });
 
-/* ── SECTIONS ── */
-section{position:relative}
-.container{max-width:1060px;margin:0 auto;padding:0 24px}
-.section-pad{padding:90px 0}
+        window.addEventListener('click', (event) => {
+          const isEl = event.target instanceof HTMLElement;
+          if (!isEl) return;
+    
+          // find ancestor links
+          const linkEl = event.target.closest("a");
+          if (!linkEl || !linkEl.href) return;
+    
+          event.preventDefault();
+          event.stopImmediatePropagation();
+    
+          if (linkEl.href.startsWith("blob-request:")) {
+            const blob = getBlobFromURL(linkEl.href);
+            if (!blob) return;
+            void blob.arrayBuffer().then((data) => {
+              realParent.postMessage({
+                type: "downloadFile",
+                filename: linkEl.download,
+                data,
+                mimeType: blob.type || "application/octet-stream",
+              });
+            });
+          } else if (linkEl.href.startsWith("data:")) {
+            const [header, base64Data] = linkEl.href.split(",");
+            const mimeMatch = header.match(/data:([^;]+)/);
+            const mimeType = mimeMatch ? mimeMatch[1] : "application/octet-stream";
+            const binaryString = atob(base64Data);
+            const data = Uint8Array.from(binaryString, (c) =>
+              c.charCodeAt(0),
+            ).buffer;
+            realParent.postMessage({
+              type: "downloadFile",
+              filename: linkEl.download,
+              data,
+              mimeType,
+            });
+          } else {
+            let linkUrl;
+            try {
+              linkUrl = new URL(linkEl.href);
+            } catch (error) {
+              return;
+            }
+    
+            if (linkUrl.hostname === window.location.hostname) return;
+      
+            realParent.postMessage({
+              type: 'openExternal',
+              href: linkEl.href,
+            }, '*');
+          }
+      });
 
-/* SECTION LABEL */
-.slabel{
-  font-size:.7rem;font-weight:700;
-  letter-spacing:.18em;text-transform:uppercase;
-  color:var(--red);margin-bottom:12px;
-}
+        const originalOpen = window.open;
+        window.open = function (url) {
+          realParent.postMessage({
+            type: "openExternal",
+            href: url,
+          }, "*");
+        };
 
-/* ── PROMISE ── */
-.promise{
-  background:var(--dark);
-  padding:90px 0;
-}
-.promise-inner{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:60px;align-items:center;
-}
-@media(max-width:768px){.promise-inner{grid-template-columns:1fr;gap:40px}}
-.promise-text h2{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2.4rem,5vw,4.2rem);
-  line-height:1;letter-spacing:.03em;
-  margin-bottom:16px;
-}
-.promise-text h2 .red{color:var(--red)}
-.promise-text p{color:var(--muted);font-size:1.05rem;margin-bottom:20px;line-height:1.7}
-.promise-text p strong{color:var(--white)}
-.promise-list{list-style:none;display:flex;flex-direction:column;gap:12px}
-.promise-list li{
-  display:flex;align-items:flex-start;gap:12px;
-  font-size:.95rem;color:var(--muted);
-}
-.promise-list li .ck{
-  color:var(--green);font-weight:700;font-size:1rem;
-  margin-top:2px;flex-shrink:0;
-}
-.promise-list li strong{color:var(--white)}
-
-.promise-numbers{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:16px;
-}
-.pnum-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:28px 20px;
-  text-align:center;
-  transition:border-color .3s;
-}
-.pnum-card:hover{border-color:rgba(255,59,59,.35)}
-.pnum-card .num{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:3.2rem;letter-spacing:.04em;
-  line-height:1;
-  color:var(--red);
-  margin-bottom:6px;
-}
-.pnum-card .desc{
-  font-size:.82rem;color:var(--muted);
-  line-height:1.4;
-}
-
-/* ── PAIN ── */
-.pain{padding:90px 0;background:var(--black)}
-.pain h2{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2.4rem,5vw,4rem);
-  line-height:1;letter-spacing:.03em;margin-bottom:8px;
-}
-.pain-lead{color:var(--muted);font-size:1.05rem;max-width:520px;margin-bottom:48px;line-height:1.7}
-.pain-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:2px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  overflow:hidden;
-}
-.pain-card{
-  background:var(--card);
-  padding:28px 24px;
-  transition:background .25s;
-  position:relative;
-}
-.pain-card:hover{background:#16161F}
-.pain-card::before{
-  content:'';
-  position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--red);
-  transform:scaleX(0);transform-origin:left;
-  transition:transform .3s;
-}
-.pain-card:hover::before{transform:scaleX(1)}
-.pain-card .ico{font-size:1.8rem;margin-bottom:12px}
-.pain-card h3{font-size:.97rem;font-weight:700;margin-bottom:6px;color:var(--white)}
-.pain-card p{font-size:.88rem;color:var(--muted);line-height:1.6}
-
-/* ── PROOF / TESTIMONIALS ── */
-.proof{background:var(--dark);padding:90px 0}
-.proof h2{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2.4rem,5vw,4rem);
-  letter-spacing:.03em;margin-bottom:6px;
-}
-.proof-sub{color:var(--muted);margin-bottom:48px;font-size:1rem}
-.proof-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:16px;
-}
-.testi{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:28px;
-  display:flex;flex-direction:column;gap:16px;
-  transition:border-color .3s,transform .3s;
-}
-.testi:hover{border-color:rgba(255,59,59,.25);transform:translateY(-4px)}
-.testi-stars{color:var(--gold);letter-spacing:3px;font-size:.95rem}
-.testi-text{
-  font-size:.95rem;color:var(--muted);
-  line-height:1.7;flex:1;
-  font-style:italic;
-}
-.testi-text strong{color:var(--white);font-style:normal}
-.testi-author{display:flex;align-items:center;gap:12px}
-.testi-av{
-  width:44px;height:44px;border-radius:50%;
-  background:linear-gradient(135deg,var(--red2),var(--red));
-  display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:.85rem;flex-shrink:0;
-}
-.testi-name{font-weight:700;font-size:.88rem}
-.testi-role{font-size:.75rem;color:var(--muted);margin-top:1px}
-/* featured testi */
-.testi.featured{
-  border-color:rgba(255,215,0,.25);
-  background:linear-gradient(135deg,#16130A,var(--card));
-}
-.testi.featured .testi-stars{color:var(--gold)}
-
-/* ── WHAT YOU GET ── */
-.get{padding:90px 0;background:var(--black)}
-.get-inner{
-  display:grid;grid-template-columns:1fr 1.1fr;
-  gap:64px;align-items:start;
-}
-@media(max-width:768px){.get-inner{grid-template-columns:1fr;gap:40px}}
-.get-book{
-  position:sticky;top:100px;
-  display:flex;flex-direction:column;align-items:center;gap:20px;
-}
-.book-3d{
-  width:240px;height:320px;
-  border-radius:4px 14px 14px 4px;
-  background:linear-gradient(140deg,#1A0A30,#3B1F6A,#6C3FC9);
-  box-shadow:
-    -10px 0 0 rgba(0,0,0,.5),
-    0 24px 80px rgba(108,63,201,.5),
-    0 0 120px rgba(108,63,201,.2);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:28px 20px;text-align:center;
-  animation:float 6s ease-in-out infinite;
-  position:relative;
-}
-.book-3d::before{
-  content:'';
-  position:absolute;left:0;top:0;bottom:0;width:14px;
-  background:rgba(0,0,0,.4);
-  border-radius:4px 0 0 4px;
-}
-.book-3d .bico{font-size:2.6rem;margin-bottom:12px}
-.book-3d .btitle{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.3rem;letter-spacing:.08em;
-  color:#fff;margin-bottom:4px;
-}
-.book-3d .bsub{font-size:.68rem;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase}
-.book-badge-new{
-  position:absolute;top:-12px;right:-12px;
-  background:var(--gold);color:#000;
-  font-size:.65rem;font-weight:800;
-  padding:5px 12px;border-radius:4px;
-  letter-spacing:.08em;text-transform:uppercase;
-}
-@keyframes float{
-  0%,100%{transform:translateY(0) rotateY(-6deg)}
-  50%{transform:translateY(-14px) rotateY(-6deg)}
-}
-
-.book-includes{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:20px;
-  width:100%;
-}
-.book-includes h4{font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
-.inc-item{
-  display:flex;align-items:center;gap:10px;
-  font-size:.88rem;padding:8px 0;
-  border-bottom:1px solid var(--border);
-}
-.inc-item:last-child{border:none}
-.inc-item .ck{color:var(--green);font-weight:700}
-
-.get-list h2{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2.2rem,4vw,3.4rem);
-  letter-spacing:.03em;margin-bottom:8px;
-  line-height:1;
-}
-.get-list p{color:var(--muted);margin-bottom:28px;font-size:1rem;line-height:1.7}
-.chapter-list{display:flex;flex-direction:column;gap:10px}
-.ch-item{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:16px 18px;
-  display:flex;align-items:center;gap:14px;
-  transition:border-color .25s,transform .25s;
-  cursor:default;
-}
-.ch-item:hover{border-color:rgba(255,59,59,.3);transform:translateX(4px)}
-.ch-num{
-  min-width:34px;height:34px;border-radius:6px;
-  background:rgba(255,59,59,.1);
-  border:1px solid rgba(255,59,59,.25);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Bebas Neue',sans-serif;font-size:.95rem;
-  color:var(--red);flex-shrink:0;
-}
-.ch-name{font-size:.92rem;font-weight:500;flex:1}
-.ch-pages{font-size:.75rem;color:var(--muted)}
-
-/* ── URGENCY SECTION ── */
-.urgency{
-  background:var(--red);
-  padding:64px 24px;
-  text-align:center;
-  position:relative;overflow:hidden;
-}
-.urgency::before{
-  content:'';
-  position:absolute;inset:0;
-  background:repeating-linear-gradient(
-    -45deg,
-    transparent,transparent 20px,
-    rgba(0,0,0,.04) 20px,rgba(0,0,0,.04) 40px
-  );
-}
-.urgency h2{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2rem,5vw,4rem);
-  letter-spacing:.04em;
-  color:#fff;margin-bottom:8px;
-  position:relative;
-}
-.urgency p{
-  color:rgba(255,255,255,.8);
-  font-size:1.05rem;margin-bottom:32px;
-  max-width:560px;margin-left:auto;margin-right:auto;
-  position:relative;
-}
-.urgency-timer{
-  display:inline-flex;gap:10px;
-  margin-bottom:36px;position:relative;
-}
-.utb{
-  background:rgba(0,0,0,.25);
-  border:1px solid rgba(255,255,255,.2);
-  border-radius:8px;
-  padding:12px 16px;
-  min-width:70px;text-align:center;
-}
-.utb .unum{
-  display:block;
-  font-family:'Bebas Neue',sans-serif;
-  font-size:2.6rem;letter-spacing:.04em;
-  color:#fff;line-height:1;
-}
-.utb .ulbl{
-  display:block;font-size:.65rem;
-  color:rgba(255,255,255,.6);
-  text-transform:uppercase;letter-spacing:.1em;
-  margin-top:2px;
-}
-.utb-sep{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:2.6rem;color:rgba(255,255,255,.5);
-  align-self:center;margin-top:-8px;
-}
-.btn-urgency{
-  display:inline-flex;align-items:center;gap:10px;
-  background:#fff;
-  color:var(--red);border:none;border-radius:8px;
-  padding:20px 48px;
-  font-size:1.05rem;font-weight:800;
-  cursor:pointer;text-decoration:none;
-  letter-spacing:.04em;text-transform:uppercase;
-  box-shadow:0 8px 32px rgba(0,0,0,.25);
-  transition:transform .15s,box-shadow .15s;
-  position:relative;
-}
-.btn-urgency:hover{transform:scale(1.04);box-shadow:0 12px 40px rgba(0,0,0,.35)}
-
-/* ── PRICING ── */
-.pricing{padding:90px 0;background:var(--dark)}
-.pricing-head{text-align:center;margin-bottom:48px}
-.pricing-head h2{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2.4rem,5vw,4.2rem);
-  letter-spacing:.03em;margin-bottom:8px;
-}
-.pricing-head p{color:var(--muted);font-size:1rem;max-width:480px;margin:0 auto}
-
-.price-box{
-  max-width:560px;margin:0 auto;
-  background:var(--card);
-  border:2px solid var(--red);
-  border-radius:16px;
-  padding:48px 40px;
-  position:relative;
-  box-shadow:0 0 80px rgba(255,59,59,.2);
-}
-@media(max-width:560px){.price-box{padding:36px 20px}}
-.price-popular{
-  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
-  background:var(--red);
-  color:#fff;font-size:.7rem;font-weight:800;
-  padding:5px 18px;border-radius:4px;
-  letter-spacing:.1em;text-transform:uppercase;
-  white-space:nowrap;
-}
-.price-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:1.6rem;letter-spacing:.06em;
-  margin-bottom:6px;text-align:center;
-}
-.price-desc{color:var(--muted);font-size:.88rem;text-align:center;margin-bottom:24px}
-.price-old{
-  text-align:center;font-size:.88rem;color:var(--muted);
-  text-decoration:line-through;margin-bottom:4px;
-}
-.price-old strong{color:var(--red);font-style:normal;text-decoration:none}
-.price-amount{
-  display:flex;align-items:baseline;justify-content:center;gap:3px;
-  margin-bottom:4px;
-}
-.price-curr{font-size:1.3rem;font-weight:700;color:var(--muted);align-self:flex-start;margin-top:12px}
-.price-val{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:5.5rem;letter-spacing:.02em;line-height:1;
-  color:var(--white);
-}
-.price-cts{font-size:1.3rem;font-weight:700;color:var(--muted);align-self:flex-start;margin-top:12px}
-.price-period{text-align:center;font-size:.82rem;color:var(--muted);margin-bottom:28px}
-.price-period strong{color:var(--green)}
-
-.price-includes{
-  list-style:none;display:flex;flex-direction:column;gap:12px;
-  margin-bottom:36px;
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  padding:24px 0;
-}
-.price-includes li{
-  display:flex;align-items:flex-start;gap:10px;font-size:.92rem;
-}
-.price-includes li .ck{color:var(--green);font-weight:700;flex-shrink:0;font-size:1rem}
-
-.btn-buy{
-  display:block;width:100%;
-  background:var(--red);
-  color:#fff;border:none;border-radius:8px;
-  padding:20px;font-size:1.05rem;font-weight:800;
-  cursor:pointer;text-decoration:none;text-align:center;
-  letter-spacing:.04em;text-transform:uppercase;
-  box-shadow:0 0 40px rgba(255,59,59,.35),0 4px 0 var(--red2);
-  transition:transform .15s,box-shadow .15s;
-}
-.btn-buy:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(255,59,59,.5),0 6px 0 var(--red2)}
-.btn-buy:active{transform:translateY(1px);box-shadow:0 0 20px rgba(255,59,59,.25),0 2px 0 var(--red2)}
-
-.price-lock{
-  margin-top:16px;text-align:center;
-  font-size:.78rem;color:var(--muted);
-  display:flex;align-items:center;justify-content:center;gap:6px;
-}
-.price-lock strong{color:var(--white)}
-
-.price-urgency-bar{
-  background:rgba(255,59,59,.08);
-  border:1px solid rgba(255,59,59,.2);
-  border-radius:8px;
-  padding:14px 18px;
-  margin-top:16px;
-  display:flex;align-items:center;gap:10px;
-  font-size:.82rem;
-}
-.pul-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:var(--red);flex-shrink:0;
-  animation:blink 1.2s infinite;
-}
-.pul-text{color:var(--muted)}
-.pul-text strong{color:var(--red)}
-
-
-/* ── BUYERS COUNTER ── */
-let buyersBase = 1247;
-const onlineBase = 38;
-const lastBuyMins = [2,3,4,5,7,2,3,1,4,6];
-let lbIdx = 0;
-
-function updateBuyers() {
-  if (Math.random() < 0.4) { buyersBase++; }
-  const online = onlineBase + Math.floor(Math.random() * 14) - 7;
-  const bc = document.getElementById('buyers-count');
-  const oc = document.getElementById('online-count');
-  const lb = document.getElementById('last-buy');
-  if (bc) bc.textContent = buyersBase.toLocaleString('pt-BR');
-  if (oc) oc.textContent = Math.max(18, online);
-  if (lb) {
-    lbIdx = (lbIdx + 1) % lastBuyMins.length;
-    lb.textContent = 'há ' + lastBuyMins[lbIdx] + ' min';
-  }
-}
-setInterval(updateBuyers, 22000);
-
-/* ── FAQ ── */
-.faq{padding:90px 0;background:var(--black)}
-.faq-head{text-align:center;margin-bottom:48px}
-.faq-head h2{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2.2rem,4vw,3.6rem);
-  letter-spacing:.03em;margin-bottom:6px;
-}
-.faq-list{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
-.faq-item{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:8px;overflow:hidden;
-  transition:border-color .2s;
-}
-.faq-item.open{border-color:rgba(255,59,59,.3)}
-.faq-q{
-  width:100%;background:none;border:none;
-  color:var(--white);font-family:'Inter',sans-serif;
-  font-size:.95rem;font-weight:600;
-  padding:20px 22px;text-align:left;
-  display:flex;justify-content:space-between;align-items:center;
-  cursor:pointer;gap:12px;
-}
-.faq-icon{color:var(--red);font-size:1.3rem;transition:transform .3s;flex-shrink:0}
-.faq-item.open .faq-icon{transform:rotate(45deg)}
-.faq-a{
-  max-height:0;overflow:hidden;
-  transition:max-height .35s ease,padding .3s;
-  padding:0 22px;color:var(--muted);
-  font-size:.9rem;line-height:1.7;
-}
-.faq-item.open .faq-a{max-height:200px;padding:0 22px 20px}
-
-/* ── FINAL CTA ── */
-.final{
-  padding:100px 24px;
-  background:var(--dark);
-  text-align:center;
-  position:relative;overflow:hidden;
-}
-.final::before{
-  content:'';position:absolute;
-  width:800px;height:800px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,59,59,.1) 0%,transparent 70%);
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  pointer-events:none;
-}
-.final h2{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2.4rem,6vw,5.5rem);
-  letter-spacing:.04em;line-height:.95;
-  max-width:800px;margin:0 auto 20px;
-  position:relative;
-}
-.final h2 .red{color:var(--red)}
-.final p{color:var(--muted);font-size:1.1rem;margin-bottom:40px;position:relative}
-.final .btn-hero{position:relative;font-size:1.1rem;padding:22px 56px}
-
-/* ── FOOTER ── */
-footer{
-  background:var(--black);
-  border-top:1px solid var(--border);
-  padding:36px 24px;
-  text-align:center;
-  font-size:.78rem;color:var(--muted);
-}
-footer a{color:var(--muted);text-decoration:none}
-footer a:hover{color:var(--white)}
-
-/* ── REVEAL ── */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .reveal{opacity:1;transform:none}
-}
-</style>
+        window.addEventListener('error', (event) => {
+          realParent.postMessage({ type: 'console', message: 'Uncaught Error: ' + event.message }, '*');
+        });
+      })();
+    </script>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTOCOLO ANSIEDADE ZERO 🔥 | 7 Dias ou Devolvo 100%</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0f1f 50%, #0d0d0d 100%);
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* BACKGROUND ANIMATED */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 51, 51, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 51, 51, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* HEADER BRUTAL */
+        header {
+            text-align: center;
+            padding: 60px 0 40px;
+            border-bottom: 3px solid #ff3333;
+            margin-bottom: 40px;
+            animation: slideDown 0.8s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .urgency-badge {
+            background: linear-gradient(135deg, #ff3333 0%, #cc0000 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 900;
+            display: inline-block;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(255, 51, 51, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 10px 30px rgba(255, 51, 51, 0.4);
+            }
+            50% {
+                box-shadow: 0 15px 40px rgba(255, 51, 51, 0.8);
+            }
+        }
+        
+        h1 {
+            font-size: 52px;
+            margin: 20px 0 15px;
+            line-height: 1.1;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 4px 20px rgba(255, 51, 51, 0.3);
+            letter-spacing: -1px;
+        }
+        
+        .subtitle {
+            font-size: 28px;
+            color: #ff3333;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .hook {
+            font-size: 18px;
+            color: #ff6666;
+            margin: 30px 0;
+            font-weight: 600;
+            padding: 20px;
+            background: rgba(255, 51, 51, 0.1);
+            border-left: 4px solid #ff3333;
+            border-radius: 4px;
+        }
+        
+        /* PAIN SECTION - BRUTAL */
+        .pain-section {
+            background: linear-gradient(135deg, rgba(255, 51, 51, 0.15) 0%, rgba(255, 51, 51, 0.05) 100%);
+            border: 2px solid #ff3333;
+            border-radius: 4px;
+            padding: 40px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pain-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ff3333, #ff6666, transparent);
+        }
+        
+        .pain-section h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #ff3333;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .pain-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .pain-list li {
+            padding: 12px 0 12px 30px;
+            font-size: 16px;
+            position: relative;
+            color: #e0e0e0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 51, 51, 0.2);
+            font-weight: 500;
+        }
+        
+        .pain-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .pain-list li:before {
+            content: "✘";
+            position: absolute;
+            left: 0;
+            color: #ff3333;
+            font-weight: 900;
+            font-size: 18px;
+        }
+        
+        /* SOLUTION SECTION */
+        .solution-section {
+            background: linear-gradient(135deg, rgba(100, 200, 100, 0.15) 0%, rgba(100, 200, 100, 0.05) 100%);
+            border: 2px solid #64c864;
+            border-radius: 4px;
+            padding: 40px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .solution-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #64c864, #90d890, transparent);
+        }
+        
+        .solution-section h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #64c864;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .solution-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .solution-list li {
+            padding: 12px 0 12px 30px;
+            font-size: 16px;
+            position: relative;
+            color: #e0e0e0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(100, 200, 100, 0.2);
+            font-weight: 500;
+        }
+        
+        .solution-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .solution-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #64c864;
+            font-weight: 900;
+            font-size: 18px;
+        }
+        
+        /* SCARCITY BOX */
+        .scarcity {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 100%);
+            border: 3px solid #ff3333;
+            padding: 35px;
+            margin: 40px 0;
+            border-radius: 4px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scarcity::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 51, 51, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: moveGrid 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes moveGrid {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(20px, 20px);
+            }
+        }
+        
+        .scarcity p {
+            font-size: 16px;
+            margin: 15px 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .count-down {
+            color: #ff3333;
+            font-size: 32px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 20px 0;
+        }
+        
+        .slots-remaining {
+            font-size: 20px;
+            color: #ff6666;
+            font-weight: 700;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        
+        /* PRICE SECTION */
+        .price-section {
+            text-align: center;
+            margin: 50px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(255, 51, 51, 0.2) 0%, rgba(100, 200, 100, 0.05) 100%);
+            border-radius: 4px;
+            border: 2px solid rgba(255, 51, 51, 0.3);
+        }
+        
+        .original-price {
+            font-size: 28px;
+            color: #666;
+            text-decoration: line-through;
+            margin-bottom: 15px;
+            text-decoration-thickness: 3px;
+            text-decoration-color: #ff3333;
+        }
+        
+        .current-price {
+            font-size: 56px;
+            color: #64c864;
+            font-weight: 900;
+            margin: 15px 0;
+            text-shadow: 0 4px 20px rgba(100, 200, 100, 0.3);
+            letter-spacing: -2px;
+        }
+        
+        .price-tag {
+            font-size: 16px;
+            color: #aaa;
+            font-weight: 500;
+        }
+        
+        /* CTA BUTTON */
+        .cta-button {
+            background: linear-gradient(135deg, #ff3333 0%, #ff0000 50%, #cc0000 100%);
+            color: white;
+            border: none;
+            padding: 24px 50px;
+            font-size: 20px;
+            font-weight: 900;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 30px 0;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 15px 50px rgba(255, 51, 51, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(255, 51, 51, 0.7);
+        }
+        
+        .cta-button:active {
+            transform: scale(0.98);
+        }
+        
+        /* TESTIMONIALS */
+        .testimonials {
+            margin: 60px 0;
+        }
+        
+        .testimonials h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: #ffffff;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .testimonial {
+            background: linear-gradient(135deg, rgba(100, 200, 100, 0.15) 0%, rgba(100, 200, 100, 0.05) 100%);
+            border-left: 4px solid #64c864;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 100px;
+            color: rgba(100, 200, 100, 0.2);
+            font-weight: bold;
+        }
+        
+        .testimonial-author {
+            color: #64c864;
+            font-weight: 900;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .testimonial-text {
+            font-size: 15px;
+            color: #d0d0d0;
+            font-style: italic;
+            line-height: 1.8;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* GUARANTEE */
+        .guarantee {
+            background: linear-gradient(135deg, rgba(100, 200, 100, 0.2) 0%, rgba(100, 200, 100, 0.1) 100%);
+            border: 3px solid #64c864;
+            padding: 40px;
+            margin: 50px 0;
+            border-radius: 4px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .guarantee::before {
+            content: '🛡️';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            font-size: 200px;
+            opacity: 0.1;
+        }
+        
+        .guarantee h3 {
+            color: #64c864;
+            font-size: 26px;
+            margin-bottom: 15px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .guarantee p {
+            font-size: 16px;
+            color: #d0d0d0;
+            line-height: 1.8;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* COPY BUTTON */
+        .copy-code {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #64c864 0%, #4aa84a 100%);
+            color: #000;
+            padding: 18px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 900;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(100, 200, 100, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid #64c864;
+        }
+        
+        .copy-code:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(100, 200, 100, 0.7);
+            background: linear-gradient(135deg, #7dd87d 0%, #64c864 100%);
+        }
+        
+        .copy-code:active {
+            transform: scale(0.95);
+        }
+        
+        .copy-notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: #64c864;
+            color: #000;
+            padding: 18px 30px;
+            border-radius: 4px;
+            font-weight: 900;
+            display: none;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 10px 30px rgba(100, 200, 100, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        footer {
+            text-align: center;
+            padding: 50px 0 30px;
+            font-size: 13px;
+            color: #666;
+            border-top: 2px solid rgba(255, 51, 51, 0.2);
+            margin-top: 50px;
+        }
+        
+        .warning {
+            background: rgba(255, 51, 51, 0.1);
+            border: 1px solid rgba(255, 51, 51, 0.3);
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+        
+        /* RESPONSIVO */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            .subtitle {
+                font-size: 20px;
+            }
+            .current-price {
+                font-size: 42px;
+            }
+            .cta-button {
+                padding: 18px 30px;
+                font-size: 16px;
+            }
+            .copy-code {
+                bottom: 20px;
+                right: 20px;
+                padding: 14px 20px;
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
-<body>
-
-<!-- ANNOUNCE BAR -->
-<div class="announce">
-  🔥 oferta relâmpago ativa — desconto de 62% por tempo limitado &nbsp;·&nbsp; não vai durar
-</div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">Livre da Ansiedade</div>
-  <div class="nav-timer-wrap">
-    <span>Expira em:</span>
-    <div class="nav-timer">
-      <div class="timer-block"><span class="num" id="nh">00</span><span class="lbl">hrs</span></div>
-      <div class="timer-block"><span class="num" id="nm">00</span><span class="lbl">min</span></div>
-      <div class="timer-block"><span class="num" id="ns">00</span><span class="lbl">seg</span></div>
-    </div>
-  </div>
-  <a href="#pricing" class="nav-cta">Garantir Agora →</a>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-noise"></div>
-  <div class="hero-glow"></div>
-
-  <div class="hero-badge"><span class="dot"></span>Oferta exclusiva · Vagas limitadas</div>
-
-  <h1>
-    CHEGA DE<br>
-    DEIXAR A <span class="red">ANSIEDADE</span><br>
-    <span class="gold">DESTRUIR</span> SUA VIDA
-  </h1>
-
-  <p class="hero-sub">
-    O método baseado em neurociência que já ajudou <strong>+1.200 pessoas</strong> a
-    recuperar o controle da mente — em menos de 30 dias.
-    <strong>Sem promessa vazia. Sem enrolação.</strong>
-  </p>
-
-  <div class="stock-wrap">
-    <div class="stock-label">
-      <span class="left">Vagas disponíveis nesta faixa de preço</span>
-      <span class="right" id="vagas-num">27 restantes</span>
-    </div>
-    <div class="stock-bar-bg">
-      <div class="stock-bar-fill" id="stock-bar"></div>
-    </div>
-  </div>
-
-  <a href="#pricing" class="btn-hero">
-    Quero sair da ansiedade agora
-    <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-  </a>
-  <p class="hero-guarantee">🔒 Garantia total de <strong>7 dias</strong> — risco zero pra você</p>
-</section>
-
-<!-- TRUST STRIP -->
-<div class="trust-strip">
-  <div class="trust-item"><span class="icon">⭐</span><strong>4.9/5</strong><span>+1.200 avaliações</span></div>
-  <div class="trust-item"><span class="icon">📱</span><strong>Acesso imediato</strong><span>após o pagamento</span></div>
-  <div class="trust-item"><span class="icon">🔒</span><strong>Pagamento seguro</strong><span>via Cakto</span></div>
-  <div class="trust-item"><span class="icon">↩️</span><strong>7 dias</strong><span>garantia total</span></div>
-  <div class="trust-item"><span class="icon">🇧🇷</span><strong>PIX, Cartão</strong><span>ou Boleto</span></div>
-</div>
-
-<!-- PROMISE -->
-<section class="promise">
-  <div class="container">
-    <div class="promise-inner">
-      <div class="promise-text reveal">
-        <p class="slabel">A Promessa</p>
-        <h2>EM 30 DIAS VOCÊ VAI SENTIR A <span class="red">DIFERENÇA</span></h2>
-        <p>Não é marketing. São <strong>técnicas validadas por décadas de pesquisa</strong> em neurociência e psicologia cognitiva — as mesmas usadas por clínicas especializadas em todo o mundo.</p>
-        <ul class="promise-list">
-          <li><span class="ck">✓</span><span>Você vai <strong>entender por que seu cérebro faz isso</strong> — e como parar o ciclo</span></li>
-          <li><span class="ck">✓</span><span>Vai ter <strong>técnicas para usar no momento da crise</strong>, não depois</span></li>
-          <li><span class="ck">✓</span><span>Vai construir <strong>uma rotina que protege sua mente</strong> do acúmulo</span></li>
-          <li><span class="ck">✓</span><span>Vai <strong>dormir melhor</strong>, trabalhar melhor, se relacionar melhor</span></li>
-          <li><span class="ck">✓</span><span>Vai ter um <strong>plano claro de 30 dias</strong> — sem adivinhação</span></li>
-        </ul>
-      </div>
-      <div class="promise-numbers reveal">
-        <div class="pnum-card"><div class="num">300M+</div><div class="desc">pessoas afetadas por ansiedade no mundo</div></div>
-        <div class="pnum-card"><div class="num">#1</div><div class="desc">Brasil: país mais ansioso do planeta (OMS)</div></div>
-        <div class="pnum-card"><div class="num">91%</div><div class="desc">dos leitores relatam melhora nas primeiras 3 semanas</div></div>
-        <div class="pnum-card"><div class="num">R$37</div><div class="desc">menos do que uma consulta. Acesso vitalício.</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- BUYERS COUNTER -->
-<div style="background:#0D0D12;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:16px 24px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
-  <div style="display:flex;align-items:center;gap:-4px;" id="avatars-wrap">
-    <div style="width:34px;height:34px;border-radius:50%;border:2px solid #0D0D12;background:linear-gradient(135deg,#7C3AED,#A855F7);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;margin-left:-8px;z-index:5">RM</div>
-    <div style="width:34px;height:34px;border-radius:50%;border:2px solid #0D0D12;background:linear-gradient(135deg,#DC2626,#F87171);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;margin-left:-8px;z-index:4">CA</div>
-    <div style="width:34px;height:34px;border-radius:50%;border:2px solid #0D0D12;background:linear-gradient(135deg,#0891B2,#38BDF8);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;margin-left:-8px;z-index:3">JS</div>
-    <div style="width:34px;height:34px;border-radius:50%;border:2px solid #0D0D12;background:linear-gradient(135deg,#059669,#34D399);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;margin-left:-8px;z-index:2">PL</div>
-    <div style="width:34px;height:34px;border-radius:50%;border:2px solid #0D0D12;background:linear-gradient(135deg,#D97706,#FBBF24);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;color:#fff;margin-left:-8px;z-index:1">MF</div>
-  </div>
-  <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center;">
-    <span style="font-size:.88rem;color:rgba(255,255,255,.5)"><strong style="color:#fff" id="buyers-count">1.247</strong> pessoas já compraram</span>
-    <span style="width:1px;height:20px;background:rgba(255,255,255,.08);display:inline-block"></span>
-    <span style="font-size:.88rem;color:rgba(255,255,255,.5)">🟢 <strong style="color:#22C55E" id="online-count">38</strong> online agora</span>
-    <span style="width:1px;height:20px;background:rgba(255,255,255,.08);display:inline-block"></span>
-    <span style="font-size:.88rem;color:rgba(255,255,255,.5)">⏱️ Última compra: <strong style="color:#fff" id="last-buy">há 4 min</strong></span>
-  </div>
-</div>
-
-<!-- PAIN -->
-<section class="pain">
-  <div class="container">
-    <p class="slabel reveal">Reconhece isso?</p>
-    <h2 class="reveal">A ANSIEDADE ESTÁ TE <span style="color:var(--red)">CUSTANDO CARO</span></h2>
-    <p class="pain-lead reveal">Cada dia que passa sem tratar é um dia perdido. Veja o que ela faz com você:</p>
-    <div class="pain-grid reveal">
-      <div class="pain-card"><div class="ico">💭</div><h3>Mente que não para</h3><p>Pensamentos em loop, cenários catastróficos, preocupação que não tem pausa — nem à noite.</p></div>
-      <div class="pain-card"><div class="ico">😴</div><h3>Sono destruído</h3><p>Você vai pra cama exausto mas não consegue dormir. Acorda no meio da madrugada com aquela sensação.</p></div>
-      <div class="pain-card"><div class="ico">📉</div><h3>Produtividade zero</h3><p>Paralisia, procrastinação, medo de errar. Você sabe o que precisa fazer — mas não consegue começar.</p></div>
-      <div class="pain-card"><div class="ico">💔</div><h3>Relacionamentos sofrendo</h3><p>Irritabilidade, distância, ciúme, insegurança. A ansiedade destrói o que você tem de mais valioso.</p></div>
-      <div class="pain-card"><div class="ico">🤒</div><h3>Sintomas físicos reais</h3><p>Coração acelerado, tensão no peito, dores de cabeça, cansaço crônico. Tudo sem causa aparente.</p></div>
-      <div class="pain-card"><div class="ico">🎭</div><h3>A máscara social</h3><p>"Tô bem" — enquanto por dentro você sustenta um turbilhão que ninguém sabe que existe.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="proof">
-  <div class="container">
-    <p class="slabel reveal">Prova real</p>
-    <h2 class="reveal">QUEM JÁ USOU <span style="color:var(--gold)">NÃO VOLTA</span> PRA ANTES</h2>
-    <p class="proof-sub reveal">Resultados reais de pessoas reais. Sem atores, sem roteiro.</p>
-    <div class="proof-grid">
-      <div class="testi featured reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Passei 4 anos convivendo com ansiedade achando que era normal. Em <strong>3 semanas</strong> usando as técnicas do capítulo 3 eu já sentia diferença. Minha esposa notou antes de mim. <strong>Melhor R$37 que já gastei.</strong>"</p>
-        <div class="testi-author">
-          <div class="testi-av">RM</div>
-          <div><div class="testi-name">Rafael M.</div><div class="testi-role">Analista Financeiro · SP · comprou há 2 meses</div></div>
+<body id="artifacts-component-root-html" style="background-color: transparent;">
+    <div class="container">
+        <header>
+            <div class="urgency-badge">⚠️ ÚLTIMAS 48 HORAS - OFERTA EXPIRADO</div>
+            <h1>⚡ PROTOCOLO<br>ANSIEDADE ZERO ⚡</h1>
+            <p class="subtitle">7 DIAS OU DEVOLVO 100%</p>
+            <div class="hook">
+                <strong>Você está acordando em pânico. Seu coração acelerado. Sem ar. E ninguém nunca te ensinou como PARAR isso.</strong>
+            </div>
+        </header>
+        
+        <div class="pain-section">
+            <h2>🔴 Você AINDA está nesse inferno:</h2>
+            <ul class="pain-list">
+                <li>Acordando com pânico e falta de ar?</li>
+                <li>Evitando sair de casa por medo do julgamento?</li>
+                <li>Gastando dinheiro em psicólogo e continuando IGUAL?</li>
+                <li>Perdendo oportunidades e relacionamentos por ansiedade?</li>
+                <li>Tomando remédio dopante que não resolve nada?</li>
+                <li>Preso em um loop obsessivo de pensamentos de medo?</li>
+                <li>Sentindo seu corpo inteiro tenso e acelerado?</li>
+            </ul>
         </div>
-      </div>
-      <div class="testi reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Tinha muito ceticismo. Li em dois dias. As técnicas de respiração e o grounding <strong>funcionam de verdade</strong> — salvaram minha apresentação mais importante do ano."</p>
-        <div class="testi-author">
-          <div class="testi-av">CA</div>
-          <div><div class="testi-name">Carolina A.</div><div class="testi-role">Gestora de Projetos · RJ · comprou há 6 semanas</div></div>
+        
+        <div style="text-align: center; font-size: 20px; color: #ff3333; margin: 40px 0; font-weight: 900; text-transform: uppercase;">
+            ⚡ O PROBLEMA: Ninguém nunca te mostrou como DESLIGAR esse alarme falso ⚡
         </div>
-      </div>
-      <div class="testi reveal">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"O plano de 30 dias mudou tudo. Pela primeira vez eu tinha <strong>estrutura, não só vontade</strong>. Completei o desafio e hoje minha rotina é completamente diferente."</p>
-        <div class="testi-author">
-          <div class="testi-av">JS</div>
-          <div><div class="testi-name">Juliana S.</div><div class="testi-role">Empreendedora · Curitiba · comprou há 5 semanas</div></div>
+        
+        <div class="scarcity">
+            <p style="font-size: 18px; color: #ff6666;">🔥 APENAS 23 VAGAS RESTANDO 🔥</p>
+            <p class="count-down">OFERTA FINALIZA EM 48h</p>
+            <p class="slots-remaining">Depois sobe para R$ 97 AUTOMATICAMENTE</p>
+            <p style="margin-top: 20px; font-size: 16px; color: #ff6666;">12.847 PESSOAS JÁ SAÍRAM DESSA ARMADILHA</p>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHAT YOU GET -->
-<section class="get">
-  <div class="container">
-    <div class="get-inner">
-      <div class="get-book reveal">
-        <div class="book-3d">
-          <div class="book-badge-new">NOVO</div>
-          <div class="bico">🧠</div>
-          <div class="btitle">Livre da Ansiedade</div>
-          <div class="bsub">Guia Definitivo</div>
+        
+        <div class="solution-section">
+            <h2>🟢 Você vai descobrir em 7 dias:</h2>
+            <ul class="solution-list">
+                <li>O REAL gatilho da sua ansiedade (que psicólogos não contam)</li>
+                <li>Como o sistema nervoso funciona (a verdade nua e crua)</li>
+                <li>3 exercícios que REDEFINEM seu sistema em 48 horas</li>
+                <li>Técnica de 2 minutos que PARA uma crise na hora</li>
+                <li>Como quebrar o loop obsessivo de pensamentos</li>
+                <li>Recuperar paz mental e confiança PERMANENTE</li>
+                <li>Nunca mais ter medo de crítica, rejeição ou julgamento</li>
+                <li>Viver sem precisar de medicação ou terapia cara</li>
+            </ul>
         </div>
-        <div class="book-includes">
-          <h4>O que você recebe</h4>
-          <div class="inc-item"><span class="ck">✓</span><span>E-book completo (120+ páginas)</span></div>
-          <div class="inc-item"><span class="ck">✓</span><span>Guia de Exercícios Práticos</span></div>
-          <div class="inc-item"><span class="ck">✓</span><span>Planner 30 Dias Antiansiedade</span></div>
-          <div class="inc-item"><span class="ck">✓</span><span>Checklist de Gatilhos Emocionais</span></div>
-          <div class="inc-item"><span class="ck">✓</span><span>Atualizações futuras gratuitas</span></div>
+        
+        <div class="price-section">
+            <p class="original-price">Valor: R$ 97</p>
+            <p class="current-price">AGORA: R$ 14,90</p>
+            <p class="price-tag">✓ Acesso imediato | ✓ Bônus de vídeos | ✓ Suporte 30 dias | ✓ Garantia 100%</p>
         </div>
-      </div>
-      <div class="get-list reveal">
-        <p class="slabel">Conteúdo</p>
-        <h2>120 PÁGINAS QUE VÃO MUDAR SUA RELAÇÃO COM A ANSIEDADE</h2>
-        <p>Conteúdo denso, sem enrolação. Cada capítulo tem ferramentas que você usa no mesmo dia.</p>
-        <div class="chapter-list">
-          <div class="ch-item"><div class="ch-num">01</div><span class="ch-name">O que é ansiedade e por que seu cérebro faz isso</span><span class="ch-pages">18p</span></div>
-          <div class="ch-item"><div class="ch-num">02</div><span class="ch-name">Os gatilhos que você (provavelmente) ignora</span><span class="ch-pages">22p</span></div>
-          <div class="ch-item"><div class="ch-num">03</div><span class="ch-name">Técnicas cognitivas para interromper espirais</span><span class="ch-pages">28p</span></div>
-          <div class="ch-item"><div class="ch-num">04</div><span class="ch-name">Rotina antiansiedade: hábitos que funcionam</span><span class="ch-pages">24p</span></div>
-          <div class="ch-item"><div class="ch-num">05</div><span class="ch-name">Quando buscar ajuda e como aproveitar a terapia</span><span class="ch-pages">16p</span></div>
-          <div class="ch-item"><div class="ch-num">06</div><span class="ch-name">Plano de ação: seus próximos 30 dias</span><span class="ch-pages">14p</span></div>
+        
+        <button class="cta-button" onclick="alert('Cole aqui seu link de checkout (Hotmart, Kiwify, etc)')">QUERO SAIR DESSA ANSIEDADE AGORA → LIBERAR ACESSO</button>
+        
+        <div class="testimonials">
+            <h2>🔥 QUEM JÁ MUDOU:</h2>
+            
+            <div class="testimonial">
+                <div class="testimonial-author">👩‍💼 Marina S. | São Paulo</div>
+                <div class="testimonial-text">"Tomei Rivotril por 5 ANOS. Depois do protocolo, parei em 30 dias. Hoje saio de casa sem medo. Minha vida voltou. Não acredito que era tão simples."</div>
+            </div>
+            
+            <div class="testimonial">
+                <div class="testimonial-author">👨‍💼 Felipe T. | Rio de Janeiro</div>
+                <div class="testimonial-text">"Perdi 2 promoções por ansiedade. Fiz o protocolo, passei na entrevista dos meus SONHOS. Mudou TUDO em uma semana. Melhor investimento da minha vida."</div>
+            </div>
+            
+            <div class="testimonial">
+                <div class="testimonial-author">👩‍🎓 Juliana M. | Belo Horizonte</div>
+                <div class="testimonial-text">"No 4º dia já respirava melhor. Na semana já tinha coragem de fazer coisas que evitava há 8 ANOS. Isso é magia. Recomendo demais."</div>
+            </div>
+            
+            <div class="testimonial">
+                <div class="testimonial-author">👨‍⚕️ Lucas P. | Curitiba</div>
+                <div class="testimonial-text">"Meu PSICÓLOGO perguntou o que tinha feito. Quando contei, ele ficou em SILÊNCIO. Depois recomendou para outros pacientes dele. Mudou meu rumo total."</div>
+            </div>
+            
+            <div class="testimonial">
+                <div class="testimonial-author">👩 Gabriela R. | Brasília</div>
+                <div class="testimonial-text">"Estava destruída. Fui diagnosticada com transtorno de pânico. Fiz o protocolo como esperança. Dia 3 já era diferente. Hoje sou outra pessoa."</div>
+            </div>
         </div>
-      </div>
+        
+        <div class="guarantee">
+            <h3>🛡️ GARANTIA BRUTAL: 7 DIAS</h3>
+            <p>Se em 7 dias você NÃO sair da ansiedade, devolvemos cada centavo. Sem perguntas. Sem complicações. Sem burocracia. Se não funcionar, seu dinheiro volta na hora. Não queremos seu dinheiro se o protocolo não mudar sua vida.</p>
+        </div>
+        
+        <div style="text-align: center; margin: 40px 0; padding: 30px; background: rgba(255, 51, 51, 0.15); border: 2px solid #ff3333; border-radius: 4px;">
+            <p style="font-size: 18px; color: #ff6666; font-weight: 900; margin-bottom: 15px; text-transform: uppercase;">⚠️ URGÊNCIA EXTREMA ⚠️</p>
+            <p style="font-size: 16px; color: #fff; margin-bottom: 15px;">Enquanto você lê isso, MAIS 3 PESSOAS estão virando suas vidas de cabeça para baixo.</p>
+            <p style="font-size: 16px; color: #ff6666; font-weight: 700;">Você continua aqui em dúvida...</p>
+            <p style="font-size: 16px; color: #ff6666; font-weight: 700;">...enquanto elas estão RESPIRANDO SEM MEDO.</p>
+        </div>
+        
+        <button class="cta-button" onclick="alert('Cole aqui seu link de checkout (Hotmart, Kiwify, etc)')">✅ SIM! QUERO R$ 14,90 → LIBERAR PROTOCOLO AGORA</button>
+        
+        <footer>
+            <p style="margin-bottom: 15px; color: #999;">
+                ⏰ <strong>OFERTA EXPIRA EM 48 HORAS</strong> | Preço sobe para R$ 97 automaticamente
+            </p>
+            <div class="warning">
+                <strong>Aviso Legal:</strong> Este protocolo é um guia baseado em técnicas comportamentais cientificamente comprovadas. Não substitui aconselhamento médico profissional. Se você tem diagnóstico psiquiátrico, converse com seu médico antes de usar. Resultados variam por pessoa.
+            </div>
+        </footer>
     </div>
-  </div>
-</section>
+    
+    <button class="copy-code" onclick="copiarHTML()">📋 COPIAR TODA HTML</button>
+    <div class="copy-notification" id="notification">✓ HTML COPIADA COM SUCESSO!</div>
+    
+    <script>
+        function copiarHTML() {
+            const htmlContent = document.documentElement.outerHTML;
+            navigator.clipboard.writeText(htmlContent).then(() => {
+                const notification = document.getElementById('notification');
+                notification.style.display = 'block';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 3000);
+            }).catch(err => {
+                alert('Erro ao copiar. Tente novamente.');
+            });
+        }
+        
+        // Easter egg: Log inspirador
+        console.log('🔥 PROTOCOLO ANSIEDADE ZERO - Você consegue! Comece AGORA! 🔥');
+    </script>
 
-<!-- URGENCY SECTION -->
-<section class="urgency">
-  <h2>ESSA OFERTA ACABA EM:</h2>
-  <p>Quando o timer zerar, o preço volta pra R$97. Sem exceção.</p>
-  <div class="urgency-timer">
-    <div class="utb"><span class="unum" id="uh">00</span><span class="ulbl">horas</span></div>
-    <span class="utb-sep">:</span>
-    <div class="utb"><span class="unum" id="um">00</span><span class="ulbl">minutos</span></div>
-    <span class="utb-sep">:</span>
-    <div class="utb"><span class="unum" id="us">00</span><span class="ulbl">segundos</span></div>
-  </div>
-  <br>
-  <a href="#pricing" class="btn-urgency">
-    Garantir por R$37 antes que acabe
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-  </a>
-</section>
-
-<!-- PRICING -->
-<section class="pricing" id="pricing">
-  <div class="container">
-    <div class="pricing-head">
-      <p class="slabel reveal">Investimento</p>
-      <h2 class="reveal">QUANTO VALE RECUPERAR<br>O CONTROLE DA SUA MENTE?</h2>
-      <p class="reveal">Menos do que uma única consulta. Acesso vitalício. Resultado garantido.</p>
-    </div>
-    <div class="price-box reveal">
-      <div class="price-popular">🔥 Melhor Opção</div>
-      <p class="price-title">Livre da Ansiedade — Completo</p>
-      <p class="price-desc">E-book + todos os bônus + atualizações para sempre</p>
-      <p class="price-old">De <s>R$ 97,00</s> — <strong>você economiza R$60</strong></p>
-      <div class="price-amount">
-        <span class="price-curr">R$</span>
-        <span class="price-val">37</span>
-        <span class="price-cts">,00</span>
-      </div>
-      <p class="price-period">Pagamento único · <strong>Acesso vitalício</strong> · Sem mensalidade</p>
-      <ul class="price-includes">
-        <li><span class="ck">✓</span><span>E-book completo com 120+ páginas em PDF</span></li>
-        <li><span class="ck">✓</span><span><strong>Bônus:</strong> Guia de Exercícios Práticos</span></li>
-        <li><span class="ck">✓</span><span><strong>Bônus:</strong> Planner de 30 Dias Antiansiedade</span></li>
-        <li><span class="ck">✓</span><span><strong>Bônus:</strong> Checklist de Gatilhos Emocionais</span></li>
-        <li><span class="ck">✓</span><span>Leitura em qualquer dispositivo (celular, tablet, PC)</span></li>
-        <li><span class="ck">✓</span><span>Todas as atualizações futuras sem custo adicional</span></li>
-        <li><span class="ck">✓</span><span>Garantia incondicional de 7 dias — 100% do dinheiro de volta</span></li>
-      </ul>
-      <!-- SUBSTITUA PELO SEU LINK DA CAKTO -->
-      <a href="https://pay.cakto.com.br/qn57cfi_921452" class="btn-buy" target="_blank" rel="noopener">
-        QUERO AGORA POR R$ 37,00 →
-      </a>
-      <p class="price-lock">🔒 Pagamento 100% seguro · <strong>Cakto</strong> · PIX, Cartão ou Boleto</p>
-      <div class="price-urgency-bar">
-        <div class="pul-dot"></div>
-        <span class="pul-text"><strong id="price-vagas">27 pessoas</strong> estão nesta página agora. Este preço pode encerrar a qualquer momento.</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq">
-  <div class="container">
-    <div class="faq-head">
-      <p class="slabel reveal">Sem dúvidas</p>
-      <h2 class="reveal">PERGUNTAS FREQUENTES</h2>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Como recebo o e-book?<span class="faq-icon">+</span></button>
-        <div class="faq-a">Imediatamente após a confirmação do pagamento, você recebe um e-mail com o link de download. Acesso instantâneo, sem espera.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">A garantia é de verdade?<span class="faq-icon">+</span></button>
-        <div class="faq-a">100% de verdade. Se em 7 dias você não ficar satisfeito por qualquer motivo — ou sem motivo nenhum — basta mandar um e-mail e devolvemos tudo. Sem perguntas, sem burocracia, sem julgamento.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Funciona para ansiedade severa?<span class="faq-icon">+</span></button>
-        <div class="faq-a">O e-book oferece conteúdo para diferentes níveis. Para casos mais severos, ele complementa o tratamento profissional com ferramentas práticas para o dia a dia — há um capítulo inteiro dedicado a quando e como buscar ajuda especializada.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Posso ler no celular?<span class="faq-icon">+</span></button>
-        <div class="faq-a">Sim. O PDF é otimizado para qualquer dispositivo: celular, tablet, computador ou e-reader. Baixe uma vez e leia offline quando quiser.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">O conteúdo tem embasamento científico?<span class="faq-icon">+</span></button>
-        <div class="faq-a">Todo o conteúdo é fundamentado em pesquisas de neurociência e psicologia cognitiva, com base nas abordagens TCC, ACT e MBSR — consideradas padrão ouro no tratamento de ansiedade.</div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Por que tão barato se é tão bom?<span class="faq-icon">+</span></button>
-        <div class="faq-a">Porque e-book não tem custo de impressão, estoque ou entrega. O objetivo é que o máximo de pessoas tenha acesso ao conteúdo. Esta faixa de R$37 é uma oferta de lançamento — o preço sobe quando as vagas desta campanha esgotarem.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="final">
-  <h2>VOCÊ MERECE UMA MENTE <span class="red">LIVRE.</span><br>COMECE HOJE.</h2>
-  <p>Cada dia que você espera é um dia que a ansiedade ganha. Mude isso agora.</p>
-  <a href="#pricing" class="btn-hero">
-    Garantir meu acesso por R$37
-    <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-  </a>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <p style="margin-bottom:10px">
-    <a href="#">Política de Privacidade</a> &nbsp;·&nbsp;
-    <a href="#">Termos de Uso</a> &nbsp;·&nbsp;
-    <a href="mailto:contato@seusite.com.br">Contato</a>
-  </p>
-  <p>© 2025 Livre da Ansiedade. Todos os direitos reservados.</p>
-  <p style="margin-top:8px;font-size:.72rem;max-width:600px;margin-left:auto;margin-right:auto">
-    Este produto é um e-book digital para fins educativos. As informações não substituem orientação médica ou psicológica profissional. Resultados podem variar.
-  </p>
-</footer>
-
-<script>
-/* ── COUNTDOWN TIMER (24h loop) ── */
-function getExpiry() {
-  let exp = localStorage.getItem('lda_expiry');
-  if (!exp || Date.now() > Number(exp)) {
-    exp = Date.now() + 23 * 3600 * 1000 + 47 * 60 * 1000 + 33 * 1000;
-    try { localStorage.setItem('lda_expiry', exp); } catch(e){}
-  }
-  return Number(exp);
-}
-const EXPIRY = getExpiry();
-
-function pad(n) { return String(n).padStart(2,'0'); }
-
-function updateTimers() {
-  const diff = Math.max(0, EXPIRY - Date.now());
-  const h = Math.floor(diff / 3600000);
-  const m = Math.floor((diff % 3600000) / 60000);
-  const s = Math.floor((diff % 60000) / 1000);
-  ['nh','nm','ns'].forEach((id,i) => {
-    const v = [h,m,s][i];
-    const el = document.getElementById(id);
-    if (el) el.textContent = pad(v);
-  });
-  ['uh','um','us'].forEach((id,i) => {
-    const v = [h,m,s][i];
-    const el = document.getElementById(id);
-    if (el) el.textContent = pad(v);
-  });
-}
-updateTimers();
-setInterval(updateTimers, 1000);
-
-/* ── STOCK BAR (fake scarcity animation) ── */
-let vagas = 27;
-function updateVagas() {
-  document.getElementById('vagas-num').textContent = vagas + ' restantes';
-  const priceVagas = document.getElementById('price-vagas');
-  if (priceVagas) priceVagas.textContent = vagas + ' pessoas';
-  const pct = (vagas / 100) * 73;
-  const bar = document.getElementById('stock-bar');
-  if (bar) bar.style.width = pct + '%';
-}
-updateVagas();
-setInterval(() => {
-  if (Math.random() < 0.3 && vagas > 7) {
-    vagas = Math.max(7, vagas - 1);
-    updateVagas();
-  }
-}, 18000);
-
-/* ── REVEAL ON SCROLL ── */
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-
-/* ── BUYERS COUNTER ── */
-let buyersBase = 1247;
-const onlineBase = 38;
-const lastBuyMins = [2,3,4,5,7,2,3,1,4,6];
-let lbIdx = 0;
-
-function updateBuyers() {
-  if (Math.random() < 0.4) { buyersBase++; }
-  const online = onlineBase + Math.floor(Math.random() * 14) - 7;
-  const bc = document.getElementById('buyers-count');
-  const oc = document.getElementById('online-count');
-  const lb = document.getElementById('last-buy');
-  if (bc) bc.textContent = buyersBase.toLocaleString('pt-BR');
-  if (oc) oc.textContent = Math.max(18, online);
-  if (lb) {
-    lbIdx = (lbIdx + 1) % lastBuyMins.length;
-    lb.textContent = 'há ' + lastBuyMins[lbIdx] + ' min';
-  }
-}
-setInterval(updateBuyers, 22000);
-
-/* ── FAQ ── */
-function toggleFaq(btn) {
-  const item = btn.closest('.faq-item');
-  const open = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-  if (!open) item.classList.add('open');
-}
-</script>
-</body>
-</html>
+</body></html>
